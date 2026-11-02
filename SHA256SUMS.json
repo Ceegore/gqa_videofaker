@@ -18,7 +18,7 @@
   "docs/11_CI_AND_TEST_LAB.md": "712cc058c0464026e891c880d64f427679c1eb746e35896f88eb861630e853f3",
   "docs/ACCEPTANCE_MATRIX.csv": "a2be464e6eb75ac1f8218435598507447f83cd50d15a047aada0357f551ddb08",
   "evidence/FUNCTIONAL_SOURCE_HASHES.json": "bd650808f84c3f32227eb261ea854a0a73d46a4cc117d5a655727bad44ed89b1",
-  "evidence/IMPLEMENTATION_2026-11-02.json": "b3e564b0f6afa0a5938d47ceb8171257a777e4457270aeb60f836b938c351b40",
+  "evidence/IMPLEMENTATION_2026-11-02.json": "a1a7354d2f25a1674fee8a7289cbab5007abae58bb660d51509cfcf6efb46af6",
   "evidence/review-round-1.log": "94ac7186c2c368e35904f1972618561c9dedf038810d72571aff46e2e0f7e98e",
   "evidence/review-round-2.log": "2ea65702281df875740139f68d078232245f85823fcdbd90ed33b2f9adeee8ee",
   "evidence/REVIEW_RESULTS.json": "88202c99d76d85d9c597a5b631ac74a2fdcbeab825ed959036b2a69d33781cf9",
@@ -34,7 +34,7 @@
   "LICENSE": "265e00df9af7c26c985ba12c8200ae0e61dcc3217a8e97eaf1f4bf9ea9ec790e",
   "licenses/THIRD_PARTY_NOTICES.md": "c4dcdfd4a34e7d7f4de959128e132815b967b7a8f076325437cc2dbab1da5167",
   "LICENSES.md": "3b88066d9acaa58a8adc1622b1da1746f910c458e2678b36b471a3778e922524",
-  "README.md": "8578335630d6b52b48ac473c6ee7ce08056b80009a77fb4a44b5f8e82482d633",
+  "README.md": "83efaf8fd657fb593d9472aca894419b33638eb26de358f00f1969ec1b10360d",
   "schemas/README.md": "a6aa99fc03c4fb1ed33faa53322f22c304f64df3d5274aeb846dea6f6aa1e4f2",
   "schemas/recorder-assessment.template.json": "f847ec787092ca67b80492503bbeb7daff1300ce219f3f25332f24a703e1b89d",
   "schemas/session.schema.json": "45996e56af56a6f7fe8f789903bf6db422c87e9ae33a2197f4405dbd58a6a047",
@@ -88,8 +88,8 @@
   "tools/package_release.py": "c22d8b386442a3d45bc33b198ad8e35fc749c36d4cf61c226b6b83eb37b68229",
   "tools/presentmon.lock.json": "33d3d7f07b5f16dad90a170b885145ddca822e8185719fb9483d2cb75c17fa01",
   "tools/run_ci_tests.ps1": "cf5c91817e4202953a5754576bb625d04cd684a88c4505afc8d5c89cfdbf25f0",
-  "tools/run_test.ps1": "14111445bf4f3b57d52e10bddeac2b4698c8027af7793bcc14152d5bf2a2e7b1",
+  "tools/run_test.ps1": "678ae931dffbaba88750d3f7e3579133fe83c2969c59ec5636adc4be0b8b4fbd",
   "tools/runner_common.ps1": "9af186da1bd14701b4dcbe4ca416291d6c5f660ab7ce1463b202fae635aceddc",
-  "tools/start_observer.ps1": "28df9209f1150eee067fdcccb712c31b38b74d9ec27db888cb5ab4f401a19ab7",
+  "tools/start_observer.ps1": "e8f405455d74f435a67bb8a322dc32d0dd165c0e7798c1c3a6ce38ad660fa8a5",
   "tools/verify_presentmon.py": "a27d597cdf9be400469dda5d567a3623278a5781a6cb7577e26ab8dc8eb68673"
 }

@@ -15,7 +15,9 @@ $job=$null
 try {
     $help=Start-ObservedProcess $pm @('--help') $RunDir
     $helpResult=Finish-ObservedProcess $help 10 (Join-Path $RunDir 'presentmon.help.txt') (Join-Path $RunDir 'presentmon.help.stderr.txt')
-    $helpText=[IO.File]::ReadAllText((Join-Path $RunDir 'presentmon.help.txt'))
+    # PresentMon 2.6.0 writes --help to stderr, not stdout. Check both streams.
+    $helpText=[IO.File]::ReadAllText((Join-Path $RunDir 'presentmon.help.txt'))+
+        [IO.File]::ReadAllText((Join-Path $RunDir 'presentmon.help.stderr.txt'))
     foreach ($flag in @('--process_name','--qpc_time','--v2_metrics','--session_name','--timed','--terminate_after_timed')) {
         if (-not $helpText.Contains($flag)) { throw ('PresentMon help missing '+$flag) }
     }

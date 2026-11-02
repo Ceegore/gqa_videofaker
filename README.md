@@ -6,6 +6,8 @@ Dieses Repository enthält die vollständige native Win32/D3D11-Implementierung,
 
 Der portable C++-Teil und die Python-Tests laufen auch ohne Windows. Maßgeblich für den aktuellen Nachweisstand sind `SHA256SUMS.json` und `evidence/IMPLEMENTATION_2026-11-02.json`.
 
+Ein direkter DXGI-Test auf der physischen GTX 1080 war erfolgreich: `borderless-control` und die Legacy-Vollbildanforderung liefen mit Exit 0, `SET_FULLSCREEN_RESULT=0x0`, Fokus und korrektem Output. **PresentMon/ETW konnte ohne erhöhte Rechte keine Trace-Session starten**; deshalb bleibt die unabhängige Präsentationsprüfung `UNVERIFIED` und Hardware-FSE `NOT_EXECUTED`.
+
 ## Einstieg
 
 1. `docs/00_START_HERE.md`: ausführbarer Weg vom Quellpaket zum Test.

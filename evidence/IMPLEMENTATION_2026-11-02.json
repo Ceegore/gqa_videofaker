@@ -49,6 +49,63 @@
       }
     }
   },
+  "hardware_runs": {
+    "host": {
+      "computer": "CEEWIN11 (Gigabyte Z97X-UD3H)",
+      "os": "Windows 11 Pro 10.0.26200",
+      "gpu": "NVIDIA GeForce GTX 1080, driver 32.0.15.8253",
+      "display": "DISPLAY1, 1920x1080, console session 1, not remote",
+      "sac_registry_state": "VerifiedAndReputablePolicyState=1 (SAC enforcement active, read-only observation)"
+    },
+    "artifact": {
+      "exe_sha256": "81bdcd611e224ba76804aafb9aa24d6b09e97a3f8c94f7734be2f9552d65efe5",
+      "source": "CI artifact run 41470768880, extracted under dist/hardware-testkit/runtime"
+    },
+    "self_test": {
+      "command": "FSEProbe.exe --self-test",
+      "exit_code": 0,
+      "stdout": "SELF_TEST_PASS - no GPU, FSE or SAC certification"
+    },
+    "list_monitors": {
+      "command": "FSEProbe.exe --list-monitors",
+      "exit_code": 0,
+      "output": "index 0: NVIDIA GeForce GTX 1080, DISPLAY1, desktop rect 0,0,1920,1080"
+    },
+    "borderless_direct": {
+      "run_id": "manual-borderless-1",
+      "command": "FSEProbe.exe --mode borderless-control --load low --duration 15 --warmup 4 --auto-mark",
+      "exit_code": 0,
+      "frames": 900,
+      "mode_ready": "fullscreen=false, focus=true, correct_output=true",
+      "marks": "AUTOMATIC_DIAGNOSTIC at 4 s and 12 s",
+      "cleanup": "LEAVE_FULLSCREEN_RESULT 0x0"
+    },
+    "legacy_direct": {
+      "run_id": "manual-legacy-3",
+      "command": "FSEProbe.exe --mode legacy-exclusive --load low --duration 15 --warmup 4 --auto-mark",
+      "exit_code": 0,
+      "frames": 876,
+      "fullscreen_request": "SET_FULLSCREEN_RESULT 0x0",
+      "mode_ready": "fullscreen=true, focus=true, correct_output=true",
+      "marks": "AUTOMATIC_DIAGNOSTIC at 4 s and 12 s",
+      "cleanup": "LEAVE_FULLSCREEN_RESULT 0x0"
+    },
+    "focus_note": "Two initial legacy attempts ended with NO_FOCUS before any mode request; a simulated operator click at the window centre allowed manual-legacy-3 to proceed. This matches the documented one-click startup path and is not counted as a presentation proof.",
+    "presentmon_attempt": {
+      "run_id": "586ce26b1e3d465fb67c98a8020d37be",
+      "result": "UNVERIFIED_LAUNCH (classifier exit 11)",
+      "presentmon_exit_code": 6,
+      "stderr": "failed to start trace session: access denied; PresentMon requires administrative privileges or membership in Performance Log Users",
+      "app_started": false,
+      "interpretation": "The runner failed closed as designed. No ETW/PresentMon evidence exists, so no FSE_VERIFIED claim is possible."
+    },
+    "verdict": {
+      "dxgi_state": "FULLSCREEN_REPORTED for manual-legacy-3",
+      "presentation_proof": "UNVERIFIED",
+      "hardware_fse_validation": "NOT_EXECUTED",
+      "recorder_result": "NOT_EVALUATED"
+    }
+  },
   "changes": [
     {
       "file": "tests/test_runner.ps1",
@@ -70,6 +127,13 @@
       "defect": "The first GitHub Actions run (41469600981) found several python.exe Application commands on windows-2025. Reading .Source from the collection produced one space-joined string, which configure_windows passed as Python3_EXECUTABLE; CMake then failed with 'Cannot run the interpreter'.",
       "fix": "Select the first Application command before reading .Source in all four scripts.",
       "verification": "The defect was reproduced by CI run 41469600981. Local PowerShell 7 and 5.1 runner gates pass after the change; a repeated Windows CI run is the native verification."
+    },
+    {
+      "file": "tools/run_test.ps1, tools/start_observer.ps1",
+      "ticket": "05/06",
+      "defect": "The real PresentMon 2.6.0 binary writes --help to stderr. The runner only checked presentmon.help.txt on stdout and aborted with 'PresentMon help missing --process_name' before starting the app.",
+      "fix": "Concatenate stdout and stderr help files before checking the required flags in both the normal runner and the elevated observer path.",
+      "verification": "Real PresentMon 2.6.0 --help produced 86 lines on stderr with all nine runner flags. The fixed runner advanced past the help gate and then failed closed only because the local user lacks ETW/Performance Log Users rights."
     }
   ],
   "commands": [
@@ -118,7 +182,7 @@
     "command": "cmd /c \"vcvars64.bat && cl /nologo /std:c++20 /EHsc /W4 /WX /utf-8 /permissive- /I src tests/core_tests.cpp src/scene.cpp\"",
     "exit_code": 2,
     "error": "fatal error C1083: cannot open include file 'crtdbg.h'",
-    "interpretation": "The local host has MSVC but no Universal CRT or Windows SDK, so the application could not be built here. No fallback compiler, toolchain installation, or policy change was attempted. The Windows build was executed in GitHub Actions instead (run 41470079129)."
+    "interpretation": "The local host has MSVC but no Universal CRT or Windows SDK, so the application could not be built here. No fallback compiler, toolchain installation, or policy change was attempted. The Windows build was executed in GitHub Actions instead (run 41470768880)."
   },
   "status": {
     "source_structural_check": "PASS",
@@ -127,19 +191,22 @@
     "powershell_5_1_gate": "PASS",
     "portable_ctest": "PASS_2_OF_2",
     "configure_windows_install_selection_ps51": "PASS_WITH_FAKE_CMAKE",
-    "windows_msvc_build": "PASS_CI_41470079129",
-    "hlsl_fxc": "PASS_CI_41470079129",
-    "windows_ci_run": "PASS_41470079129",
+    "windows_msvc_build": "PASS_CI_41470768880",
+    "hlsl_fxc": "PASS_CI_41470768880",
+    "windows_ci_run": "PASS_41470768880",
     "ctest": "PASS_3_OF_3_CI",
     "artifact_integrity": "PASS_37_ENTRIES",
+    "direct_hardware_dxgi_runs": "PASS_BORDERLESS_AND_LEGACY_REQUEST",
+    "dxgi_state": "FULLSCREEN_REPORTED_MANUAL_LEGACY_3",
+    "presentation_proof": "UNVERIFIED_NO_ETW",
     "hardware_fse_validation": "NOT_EXECUTED",
     "recorder_result": "NOT_EVALUATED"
   },
   "not_proven": [
-    "The Windows application was built and self-tested only in CI; no graphical or PresentMon run was executed.",
-    "No PowerShell run_test.ps1 end-to-end run with PresentMon and FSEProbe.exe took place.",
-    "No SAC execution approval, physical fullscreen-exclusive observation, or recorder capture was evaluated.",
+    "No PresentMon/ETW trace exists: trace-session startup requires elevation or Performance Log Users membership, so no independent presentation proof was produced.",
+    "The direct borderless and legacy runs exercised rendering, focus handling and the DXGI fullscreen request only; they are not an FSE_VERIFIED result.",
+    "No recorder capture or media quality was evaluated.",
     "Synthetic fixture verdicts remain synthetic and cannot become FSE_VERIFIED."
   ],
-  "next_gate": "Follow the physical-hardware route in docs/10 and run the borderless control then legacy test with PresentMon; hardware and recorder fields must stay NOT_EXECUTED/NOT_EVALUATED until those runs exist."
+  "next_gate": "Use an operator-authorized elevated PowerShell for tools/start_observer.ps1 (or a test account with the required ETW rights), then run the borderless control and legacy tests through tools/run_test.ps1. Hardware FSE and recorder fields must remain NOT_EXECUTED/NOT_EVALUATED until that evidence exists."
 }
