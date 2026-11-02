@@ -38,6 +38,20 @@ class ClassifierTests(unittest.TestCase):
         self.assertEqual('SYNTHETIC_NOT_HARDWARE',r['hardware_fse_validation'])
     def test_legacy_copy(self):
         mutate_csv(self.p,lambda rows,fields:[r.update(PresentMode='Hardware: Legacy Copy to front buffer') for r in rows]);self.check(verdict='SYNTHETIC_PASS')
+    def test_cpUBusy_header_alias(self):
+        path=self.p/'presentmon.csv'
+        lines=path.read_text(encoding='utf-8').splitlines()
+        lines[0]=lines[0].replace('MsCPUBusy','CPUBusy')
+        path.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+        refresh(self.p)
+        self.check('CLASSIC_EXCLUSIVE_OBSERVED','SYNTHETIC_PASS')
+    def test_missing_busy_column_rejected(self):
+        path=self.p/'presentmon.csv'
+        lines=path.read_text(encoding='utf-8').splitlines()
+        lines[0]=lines[0].replace('MsCPUBusy','UnknownBusy')
+        path.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+        refresh(self.p)
+        self.check('UNVERIFIED_SCHEMA')
     def test_independent(self):
         mutate_csv(self.p,lambda rows,fields:[r.update(PresentMode='Hardware: Independent Flip') for r in rows]);self.check('FAIL_NOT_CLASSIC_EXCLUSIVE','FAIL')
     def test_hardware_composed(self):

@@ -98,12 +98,43 @@
       "presentmon_exit_code": 6,
       "stderr": "failed to start trace session: access denied; PresentMon requires administrative privileges or membership in Performance Log Users",
       "app_started": false,
-      "interpretation": "The runner failed closed as designed. No ETW/PresentMon evidence exists, so no FSE_VERIFIED claim is possible."
+      "interpretation": "The runner failed closed as designed before elevation was available."
+    },
+    "etw_runs": {
+      "access": "Executed with one operator-approved UAC elevation: a bounded elevated PowerShell agent watched fse-runs and started start_observer.ps1 per run. The app itself stayed unelevated.",
+      "control": {
+        "run_id": "435124e360634d03a7e745da76b1761f",
+        "mode": "borderless-control",
+        "runner_exit_code": 0,
+        "verdict": "PASS",
+        "reason": "NONEXCLUSIVE_CONTROL_OBSERVED",
+        "dxgi_state": "WINDOWED_REPORTED",
+        "presentation_proof": "CONTROL_VERIFIED_NOT_FSE",
+        "hardware_fse_validation": "CONTROL_ONLY",
+        "observed_modes": {"Hardware: Independent Flip": 1162},
+        "guarded_presents": 1162,
+        "displayed_core_frames": 1102,
+        "coverage": "ONE_TO_ONE_PRESENT_LEDGER_RECONCILED"
+      },
+      "legacy": {
+        "run_id": "1e105dfa91774acaaedfffd72fb3ceec",
+        "mode": "legacy-exclusive",
+        "runner_exit_code": 10,
+        "verdict": "FAIL",
+        "reason": "FAIL_NOT_CLASSIC_EXCLUSIVE",
+        "dxgi_state": "FULLSCREEN_REPORTED",
+        "presentation_proof": "NOT_VERIFIED",
+        "hardware_fse_validation": "NOT_VERIFIED",
+        "observed_modes": {"Hardware: Independent Flip": 1169},
+        "fullscreen_request": "SET_FULLSCREEN_RESULT=0x0",
+        "interpretation": "DXGI accepted the fullscreen request, but PresentMon observed Independent Flip during the guarded legacy interval. That is not classic Legacy Flip / Legacy Copy, so the classifier correctly failed closed."
+      },
+      "classifier_fix": "PresentMon 2.6.0 --v2_metrics writes CPUBusy, not MsCPUBusy. The classifier now accepts either name for the present-time anchor."
     },
     "verdict": {
-      "dxgi_state": "FULLSCREEN_REPORTED for manual-legacy-3",
-      "presentation_proof": "UNVERIFIED",
-      "hardware_fse_validation": "NOT_EXECUTED",
+      "dxgi_state": "FULLSCREEN_REPORTED for the legacy run",
+      "presentation_proof": "CONTROL_VERIFIED_NOT_FSE for control; FAIL_NOT_CLASSIC_EXCLUSIVE for legacy",
+      "hardware_fse_validation": "NOT_VERIFIED",
       "recorder_result": "NOT_EVALUATED"
     }
   },
@@ -134,7 +165,14 @@
       "ticket": "05/06",
       "defect": "The real PresentMon 2.6.0 binary writes --help to stderr. The runner only checked presentmon.help.txt on stdout and aborted with 'PresentMon help missing --process_name' before starting the app.",
       "fix": "Concatenate stdout and stderr help files before checking the required flags in both the normal runner and the elevated observer path.",
-      "verification": "Real PresentMon 2.6.0 --help produced 86 lines on stderr with all nine runner flags. The fixed runner advanced past the help gate and then failed closed only because the local user lacks ETW/Performance Log Users rights."
+      "verification": "Real PresentMon 2.6.0 --help produced 86 lines on stderr with all nine runner flags. The fixed runner advanced past the help gate; the later elevated-observer runs produced valid traces."
+    },
+    {
+      "file": "tools/verify_presentmon.py, tests/test_presentmon_parser.py",
+      "ticket": "04/06",
+      "defect": "PresentMon 2.6.0 --v2_metrics writes the CPU-busy column as CPUBusy. The classifier required MsCPUBusy and returned UNVERIFIED_SCHEMA on a valid real trace.",
+      "fix": "Accept either CPUBusy or MsCPUBusy as the same millisecond metric; fail with UNVERIFIED_SCHEMA only when both are absent. Added alias and missing-column regression tests.",
+      "verification": "The real control trace then classified as PASS / CONTROL_VERIFIED_NOT_FSE with exit 0; the real legacy trace classified as FAIL_NOT_CLASSIC_EXCLUSIVE. All 99 Python tests pass."
     }
   ],
   "commands": [
@@ -146,7 +184,7 @@
     {
       "command": "python -m unittest discover -s tests -v",
       "exit_code": 0,
-      "result": "Ran 97 tests: OK"
+      "result": "Ran 99 tests: OK"
     },
     {
       "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./tests/test_runner.ps1",
@@ -177,6 +215,16 @@
       "command": "python tools/verify_presentmon.py --run-dir tests/fixtures/mixed",
       "exit_code": 10,
       "result": "FAIL / FAIL_PRESENT_MODE_CHANGED; negative case stayed negative."
+    },
+    {
+      "command": "tools/run_test.ps1 -Mode borderless-control -ExternalObserver (elevated observer agent)",
+      "exit_code": 0,
+      "result": "PASS / NONEXCLUSIVE_CONTROL_OBSERVED / CONTROL_VERIFIED_NOT_FSE; 1162 guarded presents, one-to-one ledger reconciliation."
+    },
+    {
+      "command": "tools/run_test.ps1 -Mode legacy-exclusive -ExternalObserver (elevated observer agent)",
+      "exit_code": 10,
+      "result": "FAIL / FAIL_NOT_CLASSIC_EXCLUSIVE; DXGI fullscreen reported, PresentMon observed Hardware: Independent Flip (1169 guarded presents), no FSE_VERIFIED."
     }
   ],
   "windows_build_attempt": {
@@ -187,7 +235,7 @@
   },
   "status": {
     "source_structural_check": "PASS",
-    "python_tests": "PASS_97",
+    "python_tests": "PASS_99",
     "powershell_7_gate": "PASS",
     "powershell_5_1_gate": "PASS",
     "portable_ctest": "PASS_2_OF_2",
@@ -198,16 +246,17 @@
     "ctest": "PASS_3_OF_3_CI",
     "artifact_integrity": "PASS_37_ENTRIES",
     "direct_hardware_dxgi_runs": "PASS_BORDERLESS_AND_LEGACY_REQUEST",
-    "dxgi_state": "FULLSCREEN_REPORTED_MANUAL_LEGACY_3",
-    "presentation_proof": "UNVERIFIED_NO_ETW",
-    "hardware_fse_validation": "NOT_EXECUTED",
+    "etw_presentmon": "EXECUTED_CONTROL_PASS_LEGACY_INDEPENDENT_FLIP",
+    "dxgi_state": "FULLSCREEN_REPORTED_LEGACY_RUN",
+    "presentation_proof": "CONTROL_VERIFIED_NOT_FSE; LEGACY_FAIL_NOT_CLASSIC_EXCLUSIVE",
+    "hardware_fse_validation": "NOT_VERIFIED",
     "recorder_result": "NOT_EVALUATED"
   },
   "not_proven": [
-    "No PresentMon/ETW trace exists: trace-session startup requires elevation or Performance Log Users membership, so no independent presentation proof was produced.",
-    "The direct borderless and legacy runs exercised rendering, focus handling and the DXGI fullscreen request only; they are not an FSE_VERIFIED result.",
+    "PresentMon was captured with an elevated observer, but the legacy run observed Hardware: Independent Flip, not classic Legacy Flip / Legacy Copy. FSE_VERIFIED is therefore not justified.",
+    "The FSO state was not changed: no registry edit and no user-visible compatibility toggle were applied.",
     "No recorder capture or media quality was evaluated.",
     "Synthetic fixture verdicts remain synthetic and cannot become FSE_VERIFIED."
   ],
-  "next_gate": "Use an operator-authorized elevated PowerShell for tools/start_observer.ps1 (or a test account with the required ETW rights), then run the borderless control and legacy tests through tools/run_test.ps1. Hardware FSE and recorder fields must remain NOT_EXECUTED/NOT_EVALUATED until that evidence exists."
+  "next_gate": "Classic legacy FSE was not observed on this Windows/title; stop per runbook ticket 07. A fresh operator-approved run may compare the user-visible 'Disable fullscreen optimizations' setting, but no registry or policy change is part of this evidence. Recorder assessment remains separate."
 }

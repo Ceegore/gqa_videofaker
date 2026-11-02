@@ -1,21 +1,22 @@
 # 12 — Finaler Status und Ticketabschluss
 
-**Stand:** 2. November 2026. Dieses Dokument fasst den tatsächlich geprüften Stand zusammen. Es ersetzt keine Hardwareabnahme und keine SAC-Freigabe.
+**Stand:** 2. November 2026. Dieses Dokument fasst den tatsächlich geprüften Stand zusammen. Es ersetzt keine Hardwarezertifizierung und keine SAC-Freigabe.
 
 ## Statusmatrix
 
 | Bereich | Status | Beleg |
 |---|---|---|
-| Quellstruktur, 97 Python-Tests, PS 7/5.1 | PASS | lokale Gates + CI |
+| Quellstruktur, 99 Python-Tests, PS 7/5.1 | PASS | lokale Gates + CI |
 | Windows-MSVC-/FXC-Build (`/W4 /WX`) | PASS | CI-Lauf 41491801315 |
 | CLI-Smoke (`--version`, `--help`, ungültig → 2) | PASS | CI-Lauf 41491801315 |
 | CTest `core`, `python`, `app_self_test` | 3/3 PASS | CI-Lauf 41491801315 |
-| Unsigniertes ZIP, Manifest, AMD64-PE32+ | PASS | CI-Artefakt, SHA-256 `9950d691…56aeb` |
-| Borderless-Direktlauf, GTX 1080 | PASS (DXGI-Pfad) | `manual/borderless`, Exit 0, 900 Frames |
-| Legacy-Direktlauf, GTX 1080 | PASS (DXGI-Anforderung) | `manual/legacy3`, `SET_FULLSCREEN_RESULT=0x0`, 876 Frames |
-| PresentMon/ETW-Erfassung | BLOCKED | `access denied`, keine Trace-Session |
-| Klassifikator ohne ETW | korrekt UNVERIFIED, Exit 11 | Lauf `586ce26b…` |
-| Unabhängige FSE-Verifikation | NOT_EXECUTED | keine PresentMon-Daten |
+| Unsigniertes ZIP, Manifest, AMD64-PE32+ | PASS | CI-Artefakt, 37 Einträge |
+| Borderless-Direktlauf, GTX 1080 | PASS (DXGI-Pfad) | `manual/borderless`, Exit 0 |
+| Legacy-Direktlauf, GTX 1080 | PASS (DXGI-Anforderung) | `manual/legacy3`, `SET_FULLSCREEN_RESULT=0x0` |
+| PresentMon/ETW mit erhöhtem Observer | **AUSGEFÜHRT** | Control `435124e3…`, Legacy `1e105dfa…` |
+| Borderless-Kontrolle mit ETW | **PASS**, `CONTROL_VERIFIED_NOT_FSE` | 1162 Frames, Ledger vollständig |
+| Legacy mit ETW | **FAIL**, `FAIL_NOT_CLASSIC_EXCLUSIVE` | 1169 Frames `Hardware: Independent Flip` |
+| Unabhängige FSE-Verifikation | **NICHT ERREICHT** | kein `Legacy Flip`/`Legacy Copy` beobachtet |
 | Recorderbewertung | NOT_EVALUATED | kein Recorder/Medium |
 | SAC | einmalige Ausführung beobachtet, keine dauerhafte Freigabe | Registrystand 1, keine Policy-Änderung |
 
@@ -26,43 +27,47 @@
 | 00 Arbeitsstand/Schutzgrenzen | PASS | Kit übernommen, Integrität geprüft, keine Schutzänderung |
 | 01 CI ohne Grafik | PASS | Workflow `workflow_dispatch`, `contents: read`, Lauf 41491801315 |
 | 02 Windows-/HLSL-Build | PASS | MSVC 19.51, FXC, vier Shader, `/W4 /WX` |
-| 03 Offline-Gates/Prozesshelfer | PASS | 97 Python-Tests, PS 7/5.1, Runner-Quoting/Timeout |
+| 03 Offline-Gates/Prozesshelfer | PASS | 99 Python-Tests, PS 7/5.1, Runner-Quoting/Timeout |
 | 04 Abnahmefähiges Paket | PASS | 37 ZIP-Einträge, PE32+, Manifest/SHA-256 |
-| 05 Testumgebung/Beobachter | BLOCKED | physischer Desktop vorhanden; ETW-Rechte fehlen |
-| 06 Borderless/Zeitzuordnung | TEILWEISE | Direktlauf PASS; PresentMon-Zeitachse nicht prüfbar |
-| 07 Legacy/negative Hardwarefälle | TEILWEISE | FSE-Anforderung PASS; kein unabhängiger PresentMode-Nachweis |
+| 05 Testumgebung/Beobachter | PASS | ein UAC-bestätigter erhöhter Observer, App blieb unelevated |
+| 06 Borderless/Zeitzuordnung | PASS | reale PresentMon-Zeitachse, Kontrolle vollständig abgeglichen |
+| 07 Legacy/negative Hardwarefälle | **STOP / FAIL** | DXGI meldet Fullscreen, PresentMon sieht Independent Flip |
 | 08 Recorderfunktion | NOT_EXECUTED | kein Recorder und keine Mediendatei vorhanden |
-| 09 Abschluss/Review | PASS (offline) | zwei saubere Offline-Runden; Hardwarefelder bleiben offen |
+| 09 Abschluss/Review | PASS (offline) | zwei saubere Offline-Runden; negatives Hardwareergebnis dokumentiert |
 
-## Die eine harte Grenze: ETW
+## ETW gelöst — und was dabei herauskam
 
-PresentMon 2.6.0 schreibt seinen Hilfe-Text nach stderr (der Runner prüft seit dem Fix beide Ströme). Der eigentliche Trace startet auf diesem Konto nicht:
+PresentMon 2.6.0 schreibt `--help` nach stderr (Runner prüft beide Ströme). Für den Trace wurde **einmalig** ein UAC-bestätigter, begrenzter PowerShell-Agent gestartet. Er startete pro Run ausschließlich `start_observer.ps1`; die Anwendung selbst lief weiterhin unelevated.
 
-```text
-error: failed to start trace session: access denied.
-PresentMon requires either administrative privileges or to be run by a user in the
-"Performance Log Users" user group.
-```
+Ergebnis der echten Läufe:
 
-Das Konto ist Mitglied von `Administratoren`, läuft aber UAC-gefiltert; `Performance Log Users` ist leer. Ohne erhöhte, separat autorisierte PowerShell bzw. ohne diese Gruppenmitgliedschaft gibt es keine ETW-Daten. Eine Rechte- oder UAC-Änderung wurde nicht vorgenommen. Der Runner bricht in diesem Fall korrekt mit `UNVERIFIED`/Exit 11 ab und erzeugt keinen falschen PASS.
+- **Borderless-Kontrolle:** `verdict=PASS`, `presentation_proof=CONTROL_VERIFIED_NOT_FSE`, 1162 Guard-Frames, `ONE_TO_ONE_PRESENT_LEDGER_RECONCILED`.
+- **Legacy:** `verdict=FAIL`, `reason=FAIL_NOT_CLASSIC_EXCLUSIVE`, `dxgi_state=FULLSCREEN_REPORTED`, beobachtet: `Hardware: Independent Flip` (1169 Guard-Frames).
+
+Damit ist die entscheidende Trennung belegt: `SetFullscreenState(TRUE)` und `GetFullscreenState=TRUE` bedeuten **nicht** klassisches FSE. Windows/Treiber haben die Legacy-Anforderung als Independent Flip präsentiert. Der Klassifikator hat korrekt fail-closed entschieden; es gibt keinen API-basierten Ersatz-PASS.
+
+Zusätzlich wurde ein realer Schemafehler behoben: PresentMon 2.6.0 `--v2_metrics` schreibt `CPUBusy`, nicht `MsCPUBusy`. Der Klassifikator akzeptiert jetzt beide Spaltennamen; ohne beide endet er weiterhin `UNVERIFIED_SCHEMA`.
 
 ## Reproduktion
 
 ```powershell
-# bereits ausgeführt, direkter DXGI-Pfad
-.\runtime\bin\FSEProbe.exe --mode borderless-control --load low --duration 15 --warmup 4 --auto-mark `
-  --run-id manual-borderless-1 --log-dir .\manual\borderless
+# Kontrolle mit erhöhtem Observer
+.\runtime\tools\run_test.ps1 -App .\runtime\bin\FSEProbe.exe `
+  -PresentMon .\PresentMon-2.6.0-x64.exe -PhysicalDesktop `
+  -Mode borderless-control -Load low -Duration 30 -AutoMark -ExternalObserver
 
-.\runtime\bin\FSEProbe.exe --mode legacy-exclusive --load low --duration 15 --warmup 4 --auto-mark `
-  --run-id manual-legacy-3 --log-dir .\manual\legacy3
+# Legacy mit erhöhtem Observer
+.\runtime\tools\run_test.ps1 -App .\runtime\bin\FSEProbe.exe `
+  -PresentMon .\PresentMon-2.6.0-x64.exe -PhysicalDesktop `
+  -Mode legacy-exclusive -Load low -Duration 30 -AutoMark -ExternalObserver
 ```
 
-Für die unabhängige Auswertung muss der Observer in einer **separat erhöhten** PowerShell gestartet werden; anschließend ist der Runner mit `-ExternalObserver` zu verwenden. Erst dann können `presentation_proof=FSE_VERIFIED` und ein belastbares `hardware_fse_validation` entstehen.
+Der Observer muss dafür in einer separat autorisierten erhöhten PowerShell laufen. Ein FSO-Vergleich über die sichtbare Windows-Kompatibilitätseinstellung ist ein **neuer, getrennter Lauf**; Registry- oder Policy-Änderungen sind nicht Teil dieser Abnahme.
 
 ## Nicht behauptet
 
 - `SET_FULLSCREEN_RESULT=0x0` oder `GetFullscreenState=TRUE` ist **kein** klassischer FSE-Nachweis.
-- Die direkten Läufe sind DXGI-/Rendering-Evidenz, keine unabhängige Präsentationsprüfung.
+- `Hardware: Independent Flip` ist kein Legacy-Nachweis; der Legacy-Lauf ist deshalb FAIL, nicht PASS.
 - Das unsignierte CI-Artefakt ist keine SAC-Freigabe und keine Hardwarezertifizierung.
 - Ohne Recorder-Medium bleibt `recorder_result=NOT_EVALUATED`.
 

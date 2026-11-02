@@ -24,7 +24,9 @@ NONLEGACY = {"Hardware: Independent Flip", "Hardware Composed: Independent Flip"
              "Composed: Flip", "Composed: Copy with GPU GDI", "Composed: Copy with CPU GDI",
              "Composed: Composition Atlas"}
 REQUIRED_PM = {"Application", "ProcessID", "SwapChainAddress", "PresentRuntime", "PresentMode",
-               "CPUStartQPC", "MsCPUBusy", "DisplayedTime"}
+               "CPUStartQPC", "DisplayedTime"}
+# PresentMon 2.6.0 --v2_metrics writes CPUBusy; older/reference exports use MsCPUBusy.
+PM_BUSY_COLUMNS = ("MsCPUBusy", "CPUBusy")
 REQUIRED_FRAMES = {"FrameIndex", "BeforeQPC", "AfterQPC", "HResult", "Fullscreen", "Focus"}
 EVIDENCE_FILES = ("app.jsonl", "frames.csv", "presentmon.csv", "presentmon.stdout.txt", "presentmon.stderr.txt")
 KNOWN_EVENTS = {"START", "DISPLAY_SELECTED", "MODE_READY", "REQUEST_FULLSCREEN", "SET_FULLSCREEN_RESULT",
@@ -214,6 +216,8 @@ def classify(run: Path) -> dict[str, Any]:
         tolerance = max(1, freq // 4000)  # 0.25 ms rounding/mapping tolerance, not a scanout estimate.
         require(before_values[0] < left and before_values[-1] > right, "UNVERIFIED_GUARD_COVERAGE")
         csvrows = rows(run / "presentmon.csv", REQUIRED_PM)
+        busy_column = next((name for name in PM_BUSY_COLUMNS if name in csvrows[0]), None)
+        require(busy_column is not None, "UNVERIFIED_SCHEMA", "presentmon.csv: missing MsCPUBusy/CPUBusy")
         target = []
         for row in csvrows:
             rowpid = integer(row["ProcessID"], "ProcessID", 1, (1 << 32)-1)
@@ -221,7 +225,7 @@ def classify(run: Path) -> dict[str, Any]:
                 continue
             require(row["Application"].lower().replace("\\", "/").split("/")[-1] == "fseprobe.exe", "UNVERIFIED_APPLICATION_NAME")
             q = integer(row["CPUStartQPC"], "CPUStartQPC", 1)
-            busy = decimal(row["MsCPUBusy"], "MsCPUBusy")
+            busy = decimal(row[busy_column], busy_column)
             present_qpc = q + int((busy * freq / 1000).to_integral_value(rounding=ROUND_HALF_UP))
             require(re.fullmatch(r"(?:0x)?[0-9a-fA-F]+", row["SwapChainAddress"]) is not None, "UNVERIFIED_SWAPCHAIN")
             address = int(row["SwapChainAddress"], 16)
@@ -253,7 +257,7 @@ def classify(run: Path) -> dict[str, Any]:
             pos = bisect.bisect_right(before_values, p)
             candidates = [j for j in range(max(0, pos-2), min(len(frames), pos+2))
                           if frames[j]["before"] - tolerance <= p <= frames[j]["after"] + tolerance]
-            require(bool(candidates), "UNVERIFIED_TIME_RECONCILIATION", "CPUStartQPC + MsCPUBusy does not match any Present call")
+            require(bool(candidates), "UNVERIFIED_TIME_RECONCILIATION", "CPUStartQPC + "+busy_column+" does not match any Present call")
             j = min(candidates, key=lambda v: abs(frames[v]["before"]-p))
             require(j not in seen, "UNVERIFIED_DUPLICATE_PRESENT", "Two CSV rows map to one app Present")
             seen.add(j)

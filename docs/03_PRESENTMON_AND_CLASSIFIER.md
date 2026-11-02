@@ -24,14 +24,14 @@ Ein lebender Prozess nach einer Sekunde ist **kein** validierter ETW-Handshake. 
 
 `frames.csv`: `FrameIndex,BeforeQPC,AfterQPC,HResult,Fullscreen,Focus`. Die Frameindices beginnen bei null, sind lückenlos und monoton. Kein Present mit Fehler oder falschem Fokus/Fullscreen wird als normaler Frame behandelt.
 
-PresentMon-Pflichtheader: `Application`, `ProcessID`, `SwapChainAddress`, `PresentRuntime`, `PresentMode`, `CPUStartQPC`, `MsCPUBusy`, `DisplayedTime`. Spalten werden nach Namen gelesen; UTF-8-BOM, andere Reihenfolge, zusätzliche gültig gequotete Spalten sind erlaubt. Fehlende/doppelte Header, unvollständige Zeilen, zu große Dateien und ungültige Zahlen sind kein Erfolg. QPC bleibt Integer; kein Float-Roundtrip über Excel oder JavaScript.
+PresentMon-Pflichtheader: `Application`, `ProcessID`, `SwapChainAddress`, `PresentRuntime`, `PresentMode`, `CPUStartQPC`, `CPUBusy` **oder** `MsCPUBusy`, `DisplayedTime`. PresentMon 2.6.0 mit `--v2_metrics` schreibt `CPUBusy`; ältere Referenzexports verwenden `MsCPUBusy`. Beide Namen werden als dieselbe Millisekunden-Metrik akzeptiert, fehlen beide, ist das Ergebnis `UNVERIFIED_SCHEMA`. Spalten werden nach Namen gelesen; UTF-8-BOM, andere Reihenfolge, zusätzliche gültig gequotete Spalten sind erlaubt. Fehlende/doppelte Header, unvollständige Zeilen, zu große Dateien und ungültige Zahlen sind kein Erfolg. QPC bleibt Integer; kein Float-Roundtrip über Excel oder JavaScript.
 
 ## Zeitmodell und Guard-Bänder
 
-`CPUStartQPC` ist CPU-Framebeginn, nicht Scanout und nicht schlicht die Zeit des Present-Aufrufs. `MsCPUBusy` ist die Zeit bis zur Präsentation [S09]. Der Auswerter berechnet mit Decimal:
+`CPUStartQPC` ist CPU-Framebeginn, nicht Scanout und nicht schlicht die Zeit des Present-Aufrufs. `CPUBusy`/`MsCPUBusy` ist die Zeit bis zur Präsentation [S09]. Der Auswerter berechnet mit Decimal:
 
 ```text
-estimated_present_qpc = CPUStartQPC + round(MsCPUBusy * qpc_frequency / 1000)
+estimated_present_qpc = CPUStartQPC + round(CPUBusy * qpc_frequency / 1000)
 ```
 
 Danach muss der Zeitanker in ein tatsächliches `[BeforeQPC, AfterQPC]` aus dem App-Ledger passen, mit 0,25 ms enger Rundungs-/Zuordnungstoleranz. Mehrere CSV-Zeilen dürfen nicht denselben Aufruf als unabhängige Belege mehrfach zählen. Eine zweite Swapchain im relevanten App-Segment wird abgewiesen, statt die bequemere auszuwählen. Der COM-Zeiger der App wird nur diagnostisch geloggt; seine Gleichheit mit einer ETW-Swapchainadresse wird **nicht** unbelegt vorausgesetzt.
