@@ -4,7 +4,7 @@ param([string]$BuildDir=(Join-Path $PSScriptRoot '..\build'),[switch]$Authorized
 if (-not $AuthorizedCi -or $env:CI -ne 'true') { throw 'This execution gate is for authorized CI only, not the protected development host.' }
 $build=(Resolve-Path -LiteralPath $BuildDir).ProviderPath
 $started=[datetime]::UtcNow
-$job=Start-ObservedProcess (Get-Command ctest -CommandType Application).Source @('--test-dir',$build,'-C','Release','--output-on-failure','--timeout','120','--output-junit',(Join-Path $build 'ctest.xml')) $build
+$job=Start-ObservedProcess (Get-Command ctest -CommandType Application -ErrorAction Stop | Select-Object -First 1).Source @('--test-dir',$build,'-C','Release','--output-on-failure','--timeout','120','--output-junit',(Join-Path $build 'ctest.xml')) $build
 $r=Finish-ObservedProcess $job 300 (Join-Path $build 'ctest.stdout.txt') (Join-Path $build 'ctest.stderr.txt')
 Write-Host ([IO.File]::ReadAllText((Join-Path $build 'ctest.stdout.txt')))
 $code=$r.ExitCode

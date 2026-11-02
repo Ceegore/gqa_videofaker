@@ -24,7 +24,7 @@ if ($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
 $appPath=(Resolve-Path -LiteralPath $App).ProviderPath
 $pmPath=(Resolve-Path -LiteralPath $PresentMon).ProviderPath
 if ([IO.Path]::GetFileName($appPath) -cne 'FSEProbe.exe') { throw 'Expected the unchanged application filename FSEProbe.exe.' }
-$pythonPath=(Get-Command $Python -CommandType Application -ErrorAction Stop).Source
+$pythonPath=(Get-Command $Python -CommandType Application -ErrorAction Stop | Select-Object -First 1).Source
 $lock=Assert-PresentMon $pmPath
 $runId=[Guid]::NewGuid().ToString('N')
 $null=New-Item -ItemType Directory -Path $OutputRoot -Force

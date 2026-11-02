@@ -37,6 +37,13 @@
       "defect": "The same 5.1 array semantics turned a one-entry vswhere result into a nested array, so installationPath/installationVersion could not be read as scalars.",
       "fix": "Normalize the ConvertFrom-Json result after assignment, before the count check and the generator-selection loop.",
       "verification": "Windows PowerShell 5.1 run with a temporary fake cmake that advertises 'Visual Studio 18 2026' selected the real vswhere installation and printed Generator: Visual Studio 18 2026; VS: 18.10.12224.181; exit code 0. No real CMake or Windows SDK is installed on this host."
+    },
+    {
+      "file": "tools/configure_windows.ps1, tools/run_test.ps1, tests/test_runner.ps1, tools/run_ci_tests.ps1",
+      "ticket": "01/02/03",
+      "defect": "The first GitHub Actions run (41469600981) found several python.exe Application commands on windows-2025. Reading .Source from the collection produced one space-joined string, which configure_windows passed as Python3_EXECUTABLE; CMake then failed with 'Cannot run the interpreter'.",
+      "fix": "Select the first Application command before reading .Source in all four scripts.",
+      "verification": "The defect was reproduced by CI run 41469600981. Local PowerShell 7 and 5.1 runner gates pass after the change; a repeated Windows CI run is the native verification."
     }
   ],
   "commands": [

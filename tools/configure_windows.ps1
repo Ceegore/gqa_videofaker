@@ -19,7 +19,8 @@ foreach($install in ($installs | Sort-Object { [version]$_.installationVersion }
     if ($name.Count -eq 1) { $selected=$install;$generator=$name[0].name;break }
 }
 if ($null -eq $selected) { throw 'Installed Visual Studio and CMake generators do not match. Update CMake or use a matching installed MSVC. Do not switch to MinGW.' }
-$pythonPath=(Get-Command $Python -CommandType Application -ErrorAction Stop).Source
+$pythonCommand=Get-Command $Python -CommandType Application -ErrorAction Stop | Select-Object -First 1
+$pythonPath=$pythonCommand.Source
 Write-Host ('Generator: '+$generator+'; VS: '+$selected.installationVersion+'; Python: '+$pythonPath)
 & cmake -S $root -B $BuildDir -G $generator -A x64 "-DCMAKE_GENERATOR_INSTANCE=$($selected.installationPath)" "-DPython3_EXECUTABLE=$pythonPath"
 if ($LASTEXITCODE -ne 0) { throw 'CMake configure failed.' }

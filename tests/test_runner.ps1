@@ -13,7 +13,7 @@ foreach($file in (Get-ChildItem -LiteralPath $root -Recurse -Filter '*.ps1' | Wh
 $temp=Join-Path ([IO.Path]::GetTempPath()) ('fse-runner-'+[Guid]::NewGuid().ToString('N'))
 $null=New-Item -ItemType Directory -Path $temp
 try {
-    $pythonPath=(Get-Command $Python -CommandType Application).Source
+    $pythonPath=(Get-Command $Python -CommandType Application -ErrorAction Stop | Select-Object -First 1).Source
     $values=@('plain','with spaces','C:\some directory\','quote"inside','', 'two\\slashes', 'Gruesse')
     $code='import json,sys; print(json.dumps(sys.argv[1:]))'
     $arguments=@('-c',$code)+$values
