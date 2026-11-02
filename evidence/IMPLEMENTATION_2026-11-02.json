@@ -51,7 +51,7 @@
   },
   "hardware_runs": {
     "host": {
-      "computer": "CEEWIN11 (Gigabyte Z97X-UD3H)",
+      "computer": "physical Windows 11 desktop (local console session; host identifiers omitted)",
       "os": "Windows 11 Pro 10.0.26200",
       "gpu": "NVIDIA GeForce GTX 1080, driver 32.0.15.8253",
       "display": "DISPLAY1, 1920x1080, console session 1, not remote",
