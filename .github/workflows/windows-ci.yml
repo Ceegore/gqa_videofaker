@@ -33,6 +33,21 @@ jobs:
         run: |
           cmake --build build --config Release --parallel 2
           if ($LASTEXITCODE -ne 0) { throw 'MSVC or shader build failed.' }
+      - name: Non-graphical application CLI smoke
+        run: |
+          $exe = 'build/Release/FSEProbe.exe'
+          $cases = @(
+            @{ Argument = '--version'; Expected = 0 },
+            @{ Argument = '--help'; Expected = 0 },
+            @{ Argument = '--definitely-invalid'; Expected = 2 }
+          )
+          foreach ($case in $cases) {
+            $process = Start-Process -FilePath $exe -ArgumentList $case.Argument -Wait -PassThru
+            if ($process.ExitCode -ne $case.Expected) {
+              throw ('CLI smoke failed for ' + $case.Argument + ': exit ' + $process.ExitCode + ', expected ' + $case.Expected)
+            }
+          }
+          Write-Host 'CLI_SMOKE_PASS: --version, --help, invalid argument exit 2'
       - name: PowerShell syntax and subprocess tests in PowerShell 7
         run: ./tests/test_runner.ps1
       - name: PowerShell 5.1 compatibility gate

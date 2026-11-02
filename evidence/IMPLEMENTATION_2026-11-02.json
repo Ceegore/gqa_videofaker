@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "recorded_utc": "2026-11-02T14:48:48Z",
+  "recorded_utc": "2026-11-02T15:20:00Z",
   "record_kind": "IMPLEMENTATION_AND_OFFLINE_GATE_EVIDENCE",
   "project_root": "D:\\Projects\\FSEProbe",
   "environment": {
@@ -9,7 +9,7 @@
     "windows_powershell": "5.1.26100.9444",
     "python": "3.12.10",
     "visual_studio": "18.10.12224.181 (MSVC 14.51.36231)",
-    "windows_sdk": "NOT_INSTALLED",
+    "windows_sdk": "NOT_INSTALLED_LOCALLY; present on the windows-2025 CI runner",
     "wsl": "Ubuntu-24.04; g++ 13.3.0; cmake 3.28.3; python 3.12.3"
   },
   "adoption": {
@@ -17,11 +17,34 @@
     "action": "The prepared kit tree was promoted unchanged to the project root. No renderer, parser, schema, classifier, or workflow architecture was redesigned.",
     "integrity_before_changes": "All 91 entries in the original SHA256SUMS.json matched. No file was missing."
   },
-  "integrity_note": "evidence/FUNCTIONAL_SOURCE_HASHES.json and evidence/REVIEW_RESULTS.json remain the original pre-change review snapshots. SHA256SUMS.json was regenerated for the current tree after the two PowerShell fixes and this evidence file was added.",
+  "integrity_note": "evidence/FUNCTIONAL_SOURCE_HASHES.json and evidence/REVIEW_RESULTS.json remain the original pre-change review snapshots. SHA256SUMS.json was regenerated for the current tree after the PowerShell fixes, the CI interpreter fix, and the README/evidence update.",
   "verification_rounds": {
     "count": 2,
     "result": "PASS",
     "scope": "check_source.py, all 97 Python tests, PowerShell 7 runner gate, PowerShell 5.1 runner gate, and the portable WSL CTest (2/2). No source change between the two rounds."
+  },
+  "ci_run": {
+    "run_id": 41470079129,
+    "url": "https://github.com/Ceegore/gqa_videofaker/actions/runs/41470079129",
+    "commit": "9c5d6e0",
+    "result": "PASS",
+    "duration_seconds": 67,
+    "gates": "configure; Release MSVC/FXC build with /W4 /WX; PowerShell 7; PowerShell 5.1; CTest 3/3 (core, python, app_self_test); unsigned package",
+    "artifact": {
+      "name": "FSEProbe-Windows-x64-UNSIGNED-NOT-HARDWARE-TESTED",
+      "zip_entries_verified": 37,
+      "zip_sha256": "27d684c214e5f02664167f13ade50dca1132b221b01475efa9c2f475c424d339",
+      "exe_sha256": "e074d3bd6081af4a46d79aa29ab7c1c2eabdc969d1669139b1e92651410bedd0",
+      "pe": "AMD64 PE32+",
+      "imports": ["d3d11.dll", "dxgi.dll", "USER32.dll", "SHELL32.dll", "KERNEL32.dll"],
+      "build_status": {
+        "ci_build_status": "PASS",
+        "binary_signature": "NOT_SIGNED_BY_THIS_PACKAGER",
+        "sac_execution": "NOT_VERIFIED",
+        "hardware_fse_validation": "NOT_EXECUTED",
+        "recorder_result": "NOT_EVALUATED"
+      }
+    }
   },
   "changes": [
     {
@@ -50,7 +73,7 @@
     {
       "command": "python tools/check_source.py",
       "exit_code": 0,
-      "result": "python_parsed=10, json_parsed=14, powershell_encoding_checked=8, code_files_reviewed=29"
+      "result": "python_parsed=10, json_parsed=15, powershell_encoding_checked=8, code_files_reviewed=29"
     },
     {
       "command": "python -m unittest discover -s tests -v",
@@ -92,7 +115,7 @@
     "command": "cmd /c \"vcvars64.bat && cl /nologo /std:c++20 /EHsc /W4 /WX /utf-8 /permissive- /I src tests/core_tests.cpp src/scene.cpp\"",
     "exit_code": 2,
     "error": "fatal error C1083: cannot open include file 'crtdbg.h'",
-    "interpretation": "MSVC is present but the Universal CRT and Windows SDK are absent. No Windows FSEProbe.exe or FXC shader build was possible on this host; no fallback compiler or policy change was attempted."
+    "interpretation": "The local host has MSVC but no Universal CRT or Windows SDK, so the application could not be built here. No fallback compiler, toolchain installation, or policy change was attempted. The Windows build was executed in GitHub Actions instead (run 41470079129)."
   },
   "status": {
     "source_structural_check": "PASS",
@@ -101,17 +124,19 @@
     "powershell_5_1_gate": "PASS",
     "portable_ctest": "PASS_2_OF_2",
     "configure_windows_install_selection_ps51": "PASS_WITH_FAKE_CMAKE",
-    "windows_msvc_build": "BLOCKED_MISSING_WINDOWS_SDK",
-    "hlsl_fxc": "NOT_EXECUTED",
-    "windows_ci_run": "NOT_EXECUTED",
+    "windows_msvc_build": "PASS_CI_41470079129",
+    "hlsl_fxc": "PASS_CI_41470079129",
+    "windows_ci_run": "PASS_41470079129",
+    "ctest": "PASS_3_OF_3_CI",
+    "artifact_integrity": "PASS_37_ENTRIES",
     "hardware_fse_validation": "NOT_EXECUTED",
     "recorder_result": "NOT_EVALUATED"
   },
   "not_proven": [
-    "No MSVC or FXC compilation of the Windows application took place.",
+    "The Windows application was built and self-tested only in CI; no graphical or PresentMon run was executed.",
     "No PowerShell run_test.ps1 end-to-end run with PresentMon and FSEProbe.exe took place.",
     "No SAC execution approval, physical fullscreen-exclusive observation, or recorder capture was evaluated.",
     "Synthetic fixture verdicts remain synthetic and cannot become FSE_VERIFIED."
   ],
-  "next_gate": "Run .github/workflows/windows-ci.yml in an authorized repository, then follow docs/05 tickets 02-04 and the physical-hardware route in docs/10."
+  "next_gate": "Follow the physical-hardware route in docs/10 and run the borderless control then legacy test with PresentMon; hardware and recorder fields must stay NOT_EXECUTED/NOT_EVALUATED until those runs exist."
 }
