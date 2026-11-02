@@ -18,6 +18,6 @@ $r=[ordered]@{
     qpc_frequency=[Diagnostics.Stopwatch]::Frequency;
     note='Inventory only. No GPU utilisation percentage, physical-display proof or SAC approval inferred.'
 }
-$json=$r|ConvertTo-Json -Depth 6
+$json=$r|ConvertTo-Json -Depth 10
 if($OutputPath){[IO.File]::WriteAllText($OutputPath,$json,(New-Object Text.UTF8Encoding($false)))}
 $json

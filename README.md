@@ -14,7 +14,8 @@ Mit einem einmalig UAC-bestätigten Observer wurde PresentMon/ETW auf der physis
 2. `AGENTS.md` und `docs/05_WEAK_AGENT_EXECUTION_RUNBOOK.md`: Arbeitsauftrag für den Coding-Agenten.
 3. `docs/01_FULL_IMPLEMENTATION_PLAN.md`: Architektur und verbindliche Entscheidungen.
 4. `docs/10_SAC_FIRST_DEV_AND_TEST.md`: Sicherheitsgrenzen, bevor etwas auf dem Dev-PC gestartet wird.
-5. `docs/12_FINAL_STATUS.md`: finaler Ticketabschluss, Hardware-Evidenz und die offene ETW-Grenze.
+5. `docs/12_FINAL_STATUS.md`: finaler Ticketabschluss und ETW-/Hardware-Ergebnis.
+6. `CHANGELOG.md`: Änderungen und bekannte Grenzen dieser Version.
 
 **Grundsatz:** SAC auf dem Entwicklungs-PC bleibt unverändert. Windows-CI baut und prüft; die echte Grafikabnahme erfolgt separat auf zulässiger physischer Windows-Hardware. Ein gebautes ZIP ist weder SAC-Freigabe noch FSE-Nachweis.
 

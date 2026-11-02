@@ -1,16 +1,18 @@
 {
   "schema": 1,
-  "version": "0.1.0-kit",
+  "version": "0.1.0",
   "date": "2026-11-02",
-  "artifact_kind": "SOURCE_IMPLEMENTATION_KIT",
+  "artifact_kind": "SOURCE_IMPLEMENTATION",
   "portable_cpp_build": "EXECUTED",
   "python_tests": "EXECUTED",
-  "windows_msvc_build": "NOT_EXECUTED",
-  "hlsl_fxc_compilation": "NOT_EXECUTED",
-  "powershell_execution": "NOT_EXECUTED",
-  "sac_runtime_acceptance": "NOT_EXECUTED",
-  "hardware_fse_validation": "NOT_EXECUTED",
+  "windows_msvc_build": "EXECUTED_PASS_CI_41507241314",
+  "hlsl_fxc_compilation": "EXECUTED_PASS_CI_41507241314",
+  "powershell_execution": "EXECUTED_PASS_PS7_PS51_CI",
+  "sac_runtime_acceptance": "SINGLE_HOST_RUN_OBSERVED_NOT_APPROVAL",
+  "hardware_fse_validation": "NOT_VERIFIED",
   "recorder_result": "NOT_EVALUATED",
   "live_fse_verification": "NOT_IMPLEMENTED_BY_DESIGN",
-  "python_test_count": 97
+  "python_test_count": 99,
+  "current_ci_run": 41507241314,
+  "evidence": "evidence/IMPLEMENTATION_2026-11-02.json"
 }

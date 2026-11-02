@@ -101,7 +101,7 @@ input_reference/ und Erstellungsbelege sind absichtlich nicht in diesem Runtimep
 AGENTS.md beschreibt die verbindlichen Regeln für diese Quellarbeit.
 ''', encoding='utf-8')
         status={
-            'schema':1,'version':'0.1.0-kit','ci_build_status':'PASS' if a.ci_build_pass else 'NOT_ATTESTED',
+            'schema':1,'version':'0.1.0','ci_build_status':'PASS' if a.ci_build_pass else 'NOT_ATTESTED',
             'binary_signature':'NOT_SIGNED_BY_THIS_PACKAGER', 'sac_execution':'NOT_VERIFIED',
             'hardware_fse_validation':'NOT_EXECUTED','recorder_result':'NOT_EVALUATED',
             'exe_sha256':digest(a.exe.read_bytes())}

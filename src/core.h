@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace probe {
-inline constexpr char Version[] = "0.1.0-kit";
+inline constexpr char Version[] = "0.1.0";
 struct Options {
     std::string mode = "legacy-exclusive", load = "low", runId, logDir;
     int monitor = 0, seconds = 60, warmup = 8, fps = 60;
@@ -86,7 +86,7 @@ inline int loadIterations(const std::string& s) {
     throw std::runtime_error("Unknown load");
 }
 inline constexpr char Help[] =
-    "FSEProbe 0.1.0-kit - DXGI diagnostic; NO live ETW verification\n"
+    "FSEProbe 0.1.0 - DXGI diagnostic; NO live ETW verification\n"
     "--mode legacy-exclusive|borderless-control  (default legacy-exclusive)\n"
     "--load off|low|medium|high                  (default low)\n"
     "--monitor 0..31 --list-monitors             (DXGI enumeration, not Settings numbering)\n"

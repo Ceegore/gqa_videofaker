@@ -65,7 +65,8 @@ class ProtocolTests(unittest.TestCase):
                 for key,value in expected.items():self.assertEqual(value,actual[key])
     def test_optional_manifests_not_live_evidence(self):
         status=json.loads((ROOT/'KIT_STATUS.json').read_text())
-        self.assertEqual('NOT_EXECUTED',status['windows_msvc_build'])
-        self.assertEqual('NOT_EXECUTED',status['hardware_fse_validation'])
+        self.assertRegex(status['windows_msvc_build'],r'^EXECUTED_PASS_CI_[0-9]+$')
+        self.assertIn(status['hardware_fse_validation'],{'NOT_EXECUTED','NOT_VERIFIED'})
+        self.assertIsInstance(status.get('current_ci_run'),int)
 
 if __name__=='__main__':unittest.main()
