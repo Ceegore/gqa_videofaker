@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "run_id": "synthetic-fixture",
+  "application_launch": "STARTED",
+  "mode": "legacy-exclusive",
+  "target_pid": 4242,
+  "process_creation_filetime": "134380944000000000",
+  "qpc_frequency": 10000000,
+  "observer_started_qpc": 9007199344740992,
+  "observer_sha256": "b2a706bc6ad475749e3b7e3409263aa1e6906d45bdcf993f6dbc0f660188f1af",
+  "observer_version": "2.6.0",
+  "time_axis": "qpc_ticks_v2",
+  "observer_exit_code": 0,
+  "observer_timeout": false,
+  "app_exit_code": 0,
+  "app_timeout": false,
+  "physical_desktop_attested": true,
+  "evidence_kind": "SYNTHETIC_FIXTURE",
+  "evidence_sha256": {
+    "app.jsonl": "b05d3ebb0fd8b1fa4c297df11420436bb02c1c776ed02d7f2ffee66dffac0b83",
+    "frames.csv": "a60936b4a81e5cd5ee0f02346c8ca55c5acae9443f423aa890dbd1db5c865e48",
+    "presentmon.csv": "00b75c627d2b2d36a76ff2fdb83338de9cc2cdf7da54c1db3df507d3ee12f5b8",
+    "presentmon.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "presentmon.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

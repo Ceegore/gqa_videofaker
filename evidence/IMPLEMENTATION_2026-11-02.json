@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-02T14:48:48Z",
+  "record_kind": "IMPLEMENTATION_AND_OFFLINE_GATE_EVIDENCE",
+  "project_root": "D:\\Projects\\FSEProbe",
+  "environment": {
+    "windows": "10.0.26200.0",
+    "powershell_7": "7.6.9",
+    "windows_powershell": "5.1.26100.9444",
+    "python": "3.12.10",
+    "visual_studio": "18.10.12224.181 (MSVC 14.51.36231)",
+    "windows_sdk": "NOT_INSTALLED",
+    "wsl": "Ubuntu-24.04; g++ 13.3.0; cmake 3.28.3; python 3.12.3"
+  },
+  "adoption": {
+    "source": "FSEProbe_IMPLEMENTATION_KIT_2026-11-02",
+    "action": "The prepared kit tree was promoted unchanged to the project root. No renderer, parser, schema, classifier, or workflow architecture was redesigned.",
+    "integrity_before_changes": "All 91 entries in the original SHA256SUMS.json matched. No file was missing."
+  },
+  "integrity_note": "evidence/FUNCTIONAL_SOURCE_HASHES.json and evidence/REVIEW_RESULTS.json remain the original pre-change review snapshots. SHA256SUMS.json was regenerated for the current tree after the two PowerShell fixes and this evidence file was added.",
+  "verification_rounds": {
+    "count": 2,
+    "result": "PASS",
+    "scope": "check_source.py, all 97 Python tests, PowerShell 7 runner gate, PowerShell 5.1 runner gate, and the portable WSL CTest (2/2). No source change between the two rounds."
+  },
+  "changes": [
+    {
+      "file": "tests/test_runner.ps1",
+      "ticket": "03",
+      "defect": "Windows PowerShell 5.1 emits a JSON array from ConvertFrom-Json as a single pipeline object. Wrapping that pipeline in @() produced a nested array, so the subprocess argument-count assertion failed with 'Argument count changed.'",
+      "fix": "Assign the JSON result first, then normalize to an array only when it is not already one.",
+      "verification": "RUNNER_TEST_PASS in PowerShell 7.6.9 and Windows PowerShell 5.1.26100.9444; exit code 0 for both."
+    },
+    {
+      "file": "tools/configure_windows.ps1",
+      "ticket": "01/03",
+      "defect": "The same 5.1 array semantics turned a one-entry vswhere result into a nested array, so installationPath/installationVersion could not be read as scalars.",
+      "fix": "Normalize the ConvertFrom-Json result after assignment, before the count check and the generator-selection loop.",
+      "verification": "Windows PowerShell 5.1 run with a temporary fake cmake that advertises 'Visual Studio 18 2026' selected the real vswhere installation and printed Generator: Visual Studio 18 2026; VS: 18.10.12224.181; exit code 0. No real CMake or Windows SDK is installed on this host."
+    }
+  ],
+  "commands": [
+    {
+      "command": "python tools/check_source.py",
+      "exit_code": 0,
+      "result": "python_parsed=10, json_parsed=14, powershell_encoding_checked=8, code_files_reviewed=29"
+    },
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "result": "Ran 97 tests: OK"
+    },
+    {
+      "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./tests/test_runner.ps1",
+      "exit_code": 0,
+      "result": "RUNNER_TEST_PASS: 8 scripts parsed; quoting, exit and timeout checked."
+    },
+    {
+      "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./tests/test_runner.ps1",
+      "exit_code": 0,
+      "result": "RUNNER_TEST_PASS: 8 scripts parsed; quoting, exit and timeout checked."
+    },
+    {
+      "command": "wsl -d Ubuntu-24.04 -- bash -lc 'cmake -S . -B /tmp/fse-build -DFSEPROBE_PORTABLE_TESTS_ONLY=ON -DCMAKE_BUILD_TYPE=Release && cmake --build /tmp/fse-build --parallel 2 && ctest --test-dir /tmp/fse-build --output-on-failure'",
+      "exit_code": 0,
+      "result": "2/2 tests passed: core and python. Portable build only; not the Windows application."
+    },
+    {
+      "command": "python tools/verify_presentmon.py --run-dir tests/fixtures/legacy",
+      "exit_code": 0,
+      "result": "SYNTHETIC_PASS / CLASSIC_EXCLUSIVE_OBSERVED; labeled synthetic, not hardware evidence."
+    },
+    {
+      "command": "python tools/verify_presentmon.py --run-dir tests/fixtures/control",
+      "exit_code": 0,
+      "result": "SYNTHETIC_PASS / NONEXCLUSIVE_CONTROL_OBSERVED; not an FSE pass."
+    },
+    {
+      "command": "python tools/verify_presentmon.py --run-dir tests/fixtures/mixed",
+      "exit_code": 10,
+      "result": "FAIL / FAIL_PRESENT_MODE_CHANGED; negative case stayed negative."
+    }
+  ],
+  "windows_build_attempt": {
+    "command": "cmd /c \"vcvars64.bat && cl /nologo /std:c++20 /EHsc /W4 /WX /utf-8 /permissive- /I src tests/core_tests.cpp src/scene.cpp\"",
+    "exit_code": 2,
+    "error": "fatal error C1083: cannot open include file 'crtdbg.h'",
+    "interpretation": "MSVC is present but the Universal CRT and Windows SDK are absent. No Windows FSEProbe.exe or FXC shader build was possible on this host; no fallback compiler or policy change was attempted."
+  },
+  "status": {
+    "source_structural_check": "PASS",
+    "python_tests": "PASS_97",
+    "powershell_7_gate": "PASS",
+    "powershell_5_1_gate": "PASS",
+    "portable_ctest": "PASS_2_OF_2",
+    "configure_windows_install_selection_ps51": "PASS_WITH_FAKE_CMAKE",
+    "windows_msvc_build": "BLOCKED_MISSING_WINDOWS_SDK",
+    "hlsl_fxc": "NOT_EXECUTED",
+    "windows_ci_run": "NOT_EXECUTED",
+    "hardware_fse_validation": "NOT_EXECUTED",
+    "recorder_result": "NOT_EVALUATED"
+  },
+  "not_proven": [
+    "No MSVC or FXC compilation of the Windows application took place.",
+    "No PowerShell run_test.ps1 end-to-end run with PresentMon and FSEProbe.exe took place.",
+    "No SAC execution approval, physical fullscreen-exclusive observation, or recorder capture was evaluated.",
+    "Synthetic fixture verdicts remain synthetic and cannot become FSE_VERIFIED."
+  ],
+  "next_gate": "Run .github/workflows/windows-ci.yml in an authorized repository, then follow docs/05 tickets 02-04 and the physical-hardware route in docs/10."
+}

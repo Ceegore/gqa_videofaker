@@ -1,0 +1,6 @@
+{
+  "verdict": "SYNTHETIC_PASS",
+  "reason": "CLASSIC_EXCLUSIVE_OBSERVED",
+  "recorder_result": "NOT_EVALUATED",
+  "hardware_fse_validation": "SYNTHETIC_NOT_HARDWARE"
+}

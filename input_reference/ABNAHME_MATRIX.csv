@@ -1,0 +1,45 @@
+id,area,gate,execution,stimulus,expected,evidence,priority
+SAC-01,SAC,S0,Dev-PC read-only,SAC enforcer via UI/citool,Keinerlei Abschaltung oder Policy-Mutation,Read-only script + OS UI inspection,P0
+SAC-02,SAC,S0,Dev-PC read-only,CodeIntegrity 3077 nach blockiertem Exe-Start,APP_CONTROL_BLOCKED und kein DXGI-Fail,timestamp + executable path + event 3077,P0
+SAC-03,SAC,S0,Dev-PC,unsigned FSEProbe.exe,Nicht lokal als funktionsfaehig voraussetzen,CI artefact UNSIGNED label,P0
+SAC-04,SAC,S0,Dev-PC,self-signed certificate,Keine falsche SAC-Freigabe,Microsoft Trusted Root Program documentation,P0
+SAC-05,SAC,S0,Dev-PC,PowerShell Diagnose-Skript wird blockiert,Manueller read-only Pfad vorhanden,manuelle Befehlspfade,P0
+SAC-06,SAC,S1,CI,Windows Cmake x64 Build,Build wird unabhängig von lokaler EXE-Ausführung abgeschlossen,CMake logs + artifact,P0
+SAC-07,SAC,S1,CI,Parser-/Protocol-Tests,Tests laufen ohne GPU/Fullscreen,JUnit/CTest/unittest output,P0
+SAC-08,SAC,S2,CI,Artefakt veröffentlichen,UNSIGNED/NOT_FSE_TESTED klar markiert,Build status + sha256,P0
+SAC-09,SAC,S3,Hardware test OS,zweite Windows-Installation mit GPU+Monitor,"Lokale interaktive Testsession, SAC Dev-PC bleibt unverändert",OS/GPU/Monitor/Session evidence,P0
+SAC-10,SAC,S3,SAC dev-PC,CA-signed release wirklich starten,Signaturprüfung plus tatsächlicher Start; andernfalls BLOCKED_BY_APP_CONTROL,Authenticode + CodeIntegrity + launch log,P0
+SAC-11,SAC,S4,Any,nicht ausführbares Binary,Kein FSE_PASS; hardware_status NOT_EXECUTED,summary.json,P0
+BUILD-01,Build,CI,CI,CMake Visual Studio Generator,MSVC/SDK detected; x64 Release succeeds,build artifact + configure log,P0
+BUILD-02,Build,CI,CI,Compilerfehler/fehlende Quelle,"Job fail, kein release-PASS",failing logs,P0
+BUILD-03,Build,CI,CI,EXE hash/manifests,SHA256 reproducibly created; no key leaks,manifest SHA256,P0
+DXGI-01,DXGI,Hardware,Real Windows local,SetFullscreenState success,DXGI_ACTIVE != FSE_VERIFIED,app.jsonl+ETW,P0
+DXGI-02,DXGI,Hardware,Real Windows local,SetFullscreenState E_FAIL,"FAIL_DXGI, cleanup",HRESULTs,P0
+DXGI-03,DXGI,Hardware,Real Windows local,Alt+Tab focus lost,Active capture invalidated,focus + PM events,P0
+DXGI-04,DXGI,Hardware,Real Windows local,ESC/timeout,Return to normal display; no leftover fullscreen,exit event + operator observation,P0
+DXGI-05,DXGI,Hardware,Real Windows local,device removed,device reason and graceful report,device event + HRESULT,P0
+DXGI-06,DXGI,Hardware,Real Windows local,wrong monitor output,FAIL_WRONG_MONITOR,output LUID/monitor+PM,P0
+DXGI-07,DXGI,Hardware,Real Windows local,multi-monitor + HighDPI,Expected output selected with correct physical coords,output details + screenshot,P0
+DXGI-08,DXGI,Hardware,Real Windows local,borderless control,No accidental SetFullscreenState TRUE,api log+PM,P0
+DXGI-09,DXGI,Hardware,Real Windows local,FSO optimized path,Hardware Independent Flip not FSE PASS,PM present modes,P0
+PM-01,PresentMon,Offline,CI,Legacy Flip positive fixture,Verify only target PID/Swap/time interval,CSV/expected status,P0
+PM-02,PresentMon,Offline,CI,Legacy Copy positive fixture,Recognize legacy ownership,CSV/expected status,P0
+PM-03,PresentMon,Offline,CI,Independent Flip only,FAIL nonlegacy,CSV/expected status,P0
+PM-04,PresentMon,Offline,CI,Hardware Composed Independent Flip only,FAIL nonlegacy,CSV/expected status,P0
+PM-05,PresentMon,Offline,CI,Composed Flip only,FAIL nonlegacy,CSV/expected status,P0
+PM-06,PresentMon,Offline,CI,Mixed legacy/nonlegacy inside capture,FAIL_MODE_CHANGED,CSV/expected status,P0
+PM-07,PresentMon,Offline,CI,Legacy frames outside capture only,"UNVERIFIED, no PASS",CSV/time marks,P0
+PM-08,PresentMon,Offline,CI,Missing qpc column,UNVERIFIED_TIME_AXIS,CSV/header,P0
+PM-09,PresentMon,Offline,CI,Incorrect PID or ambiguous swapchain,UNVERIFIED_IDENTITY,CSV/expected status,P0
+PM-10,PresentMon,Offline,CI,Timestamp unit mismatch; QPC overflow,UNVERIFIED; never false PASS,bad CSV fixtures,P0
+PM-11,PresentMon,Offline,CI,UTF8 BOM/column reordered,Parser robust,CSV/expected status,P0
+PM-12,PresentMon,Offline,CI,Corrupt/empty CSV,UNVERIFIED; parse error report,CSV/expected status,P0
+PM-13,PresentMon,Hardware,Real Windows local,recording tool overlay activated,Changes in presentation during capture not green,PM/recorder interval,P0
+PM-14,PresentMon,Hardware,Real Windows local,streaming latency not proven,HUD must say NOT_LIVE_VERIFIED,app UI screenshot+logs,P0
+CAP-01,Recorder,Hardware,Real Windows local,Screenshot capture with corners,Corner IDs and all frame labels visible,image + app log,P0
+CAP-02,Recorder,Hardware,Real Windows local,Video capture for 30s,"No freeze, clear motion, framecounter observable",video + report,P0
+CAP-03,Recorder,Hardware,Real Windows local,Recorder failure,FSE proof reported separately from recorder_result,summary.json,P0
+CAP-04,Recorder,Hardware,Real Windows local,Screenshot not inspected,recorder_result NOT_EVALUATED,summary.json,P0
+PKG-01,Packaging,CI,CI,ZIP creation,manifest and members verified; no traversal,zipfile test+sha256,P0
+PKG-02,Documentation,GO,Agent,two final reviews,Two successive clean checks or documented limitations,review logs,P0
+PKG-03,Documentation,GO,Agent,Third-party sample used,License/commit provenance evidenced,licenses+source ledger,P0

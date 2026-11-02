@@ -1,0 +1,14 @@
+/build*/
+/out/
+/logs/
+/dist/
+__pycache__/
+*.pyc
+*.user
+.vs/
+external/*.exe
+external/*.msi
+/tools/PresentMon-*.exe
+*.zip
+*.7z
+*.sha256

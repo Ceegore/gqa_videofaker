@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "run_id": null,
+  "reviewer": null,
+  "reviewed_utc": null,
+  "recorder_name": null,
+  "recorder_version": null,
+  "capture_backend": null,
+  "recording_fps": null,
+  "files": [],
+  "result": "NOT_EVALUATED",
+  "checks": {
+    "four_corners_visible": "NOT_EVALUATED",
+    "run_and_frame_id_readable": "NOT_EVALUATED",
+    "crop_and_scaling": "NOT_EVALUATED",
+    "motion_and_freezes": "NOT_EVALUATED",
+    "frame_sampling_expected": "NOT_EVALUATED",
+    "black_frames": "NOT_EVALUATED"
+  },
+  "notes": "Operator fills this separately; never rewrite the ETW report to imply media was inspected."
+}

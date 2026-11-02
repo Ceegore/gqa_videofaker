@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "FSEProbe session metadata schema 1",
+  "required": [
+    "schema",
+    "run_id",
+    "evidence_kind",
+    "mode",
+    "application_launch"
+  ],
+  "properties": {
+    "schema": {
+      "const": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 48
+    },
+    "evidence_kind": {
+      "enum": [
+        "REAL_WINDOWS_RUN",
+        "SYNTHETIC_FIXTURE"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "legacy-exclusive",
+        "borderless-control"
+      ]
+    },
+    "application_launch": {
+      "enum": [
+        "NOT_STARTED",
+        "START_ATTEMPTED",
+        "STARTED",
+        "BLOCKED_BY_APP_CONTROL"
+      ]
+    },
+    "target_pid": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "process_creation_filetime": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "qpc_frequency": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "observer_started_qpc": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "observer_exit_code": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "app_exit_code": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "physical_desktop_attested": {
+      "type": "boolean"
+    },
+    "evidence_sha256": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    }
+  },
+  "additionalProperties": true,
+  "description": "Transport schema; verify_presentmon.py enforces stricter semantic evidence rules. Passing this schema alone is not proof."
+}

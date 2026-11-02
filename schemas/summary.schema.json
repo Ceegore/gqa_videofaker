@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "FSEProbe result schema 1",
+  "required": [
+    "schema",
+    "verdict",
+    "reason",
+    "dxgi_state",
+    "presentation_proof",
+    "recorder_result",
+    "hardware_fse_validation"
+  ],
+  "properties": {
+    "schema": {
+      "const": 1
+    },
+    "verdict": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNVERIFIED",
+        "BLOCKED",
+        "SYNTHETIC_PASS"
+      ]
+    },
+    "reason": {
+      "type": "string"
+    },
+    "dxgi_state": {
+      "type": "string"
+    },
+    "presentation_proof": {
+      "type": "string"
+    },
+    "recorder_result": {
+      "const": "NOT_EVALUATED"
+    },
+    "hardware_fse_validation": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

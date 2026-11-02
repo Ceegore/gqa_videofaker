@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-02T14:10:00.836245+00:00",
+  "environment": {
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "windows_available": false
+  },
+  "python_tests_per_round": 97,
+  "ctest_targets_per_round": 2,
+  "portable_assertions_per_core_execution": 631003,
+  "portable_cpp_compilers": [
+    "GNU C++ 14.2.0 Release warnings-as-errors",
+    "Clang 17.0.0 address+undefined sanitizers"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "result": "PASS",
+      "commands": [
+        {
+          "command": [
+            "cmake",
+            "--build",
+            "/mnt/data/fseprobe-portable-build",
+            "--parallel",
+            "2"
+          ],
+          "exit_code": 0
+        },
+        {
+          "command": [
+            "ctest",
+            "--test-dir",
+            "/mnt/data/fseprobe-portable-build",
+            "--output-on-failure",
+            "-V"
+          ],
+          "exit_code": 0
+        },
+        {
+          "command": [
+            "/mnt/data/fseprobe-core-sanitized"
+          ],
+          "exit_code": 0
+        },
+        {
+          "command": [
+            "/opt/pyvenv/bin/python",
+            "tools/check_source.py"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "zip_files_checked_at_round": 88,
+      "source_inventory_sha256": "483c45372238e99fa012c142a86c0b4bfd6b05df4cb84f5d868a4185d976d2dd",
+      "functional_source_changes": 0,
+      "log": "review-round-1.log"
+    },
+    {
+      "round": 2,
+      "result": "PASS",
+      "commands": [
+        {
+          "command": [
+            "cmake",
+            "--build",
+            "/mnt/data/fseprobe-portable-build",
+            "--parallel",
+            "2"
+          ],
+          "exit_code": 0
+        },
+        {
+          "command": [
+            "ctest",
+            "--test-dir",
+            "/mnt/data/fseprobe-portable-build",
+            "--output-on-failure",
+            "-V"
+          ],
+          "exit_code": 0
+        },
+        {
+          "command": [
+            "/mnt/data/fseprobe-core-sanitized"
+          ],
+          "exit_code": 0
+        },
+        {
+          "command": [
+            "/opt/pyvenv/bin/python",
+            "tools/check_source.py"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "zip_files_checked_at_round": 89,
+      "source_inventory_sha256": "483c45372238e99fa012c142a86c0b4bfd6b05df4cb84f5d868a4185d976d2dd",
+      "functional_source_changes": 0,
+      "log": "review-round-2.log"
+    }
+  ],
+  "scope": "Portable source/offline tests and package integrity only. No native Windows build, HLSL compiler, PowerShell execution, SAC acceptance, PresentMon binary run, FSE hardware or recorder acceptance.",
+  "windows_msvc_build": "NOT_EXECUTED",
+  "hlsl_fxc": "NOT_EXECUTED",
+  "powershell_execution": "NOT_EXECUTED",
+  "hardware_fse_validation": "NOT_EXECUTED"
+}

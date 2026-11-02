@@ -1,0 +1,6 @@
+{
+  "verdict": "FAIL",
+  "reason": "FAIL_PRESENT_MODE_CHANGED",
+  "recorder_result": "NOT_EVALUATED",
+  "hardware_fse_validation": "SYNTHETIC_NOT_HARDWARE"
+}

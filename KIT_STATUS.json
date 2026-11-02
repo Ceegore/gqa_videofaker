@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "version": "0.1.0-kit",
+  "date": "2026-11-02",
+  "artifact_kind": "SOURCE_IMPLEMENTATION_KIT",
+  "portable_cpp_build": "EXECUTED",
+  "python_tests": "EXECUTED",
+  "windows_msvc_build": "NOT_EXECUTED",
+  "hlsl_fxc_compilation": "NOT_EXECUTED",
+  "powershell_execution": "NOT_EXECUTED",
+  "sac_runtime_acceptance": "NOT_EXECUTED",
+  "hardware_fse_validation": "NOT_EXECUTED",
+  "recorder_result": "NOT_EVALUATED",
+  "live_fse_verification": "NOT_IMPLEMENTED_BY_DESIGN",
+  "python_test_count": 97
+}

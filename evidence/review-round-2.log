@@ -1,0 +1,158 @@
+$ cmake --build /mnt/data/fseprobe-portable-build --parallel 2
+[100%] Built target probe_core_tests
+
+EXIT_CODE=0
+
+$ ctest --test-dir /mnt/data/fseprobe-portable-build --output-on-failure -V
+Internal ctest changing into directory: /mnt/data/fseprobe-portable-build
+UpdateCTestConfiguration  from :/mnt/data/fseprobe-portable-build/DartConfiguration.tcl
+Parse Config file:/mnt/data/fseprobe-portable-build/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/mnt/data/fseprobe-portable-build/DartConfiguration.tcl
+Parse Config file:/mnt/data/fseprobe-portable-build/DartConfiguration.tcl
+Test project /mnt/data/fseprobe-portable-build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: core
+
+1: Test command: /mnt/data/fseprobe-portable-build/probe_core_tests
+1: Working Directory: /mnt/data/fseprobe-portable-build
+1: Test timeout computed to be: 30
+1: CORE_PASS 631003 assertions
+1/2 Test #1: core .............................   Passed    0.01 sec
+test 2
+    Start 2: python
+
+2: Test command: /opt/pyvenv/bin/python3 "-m" "unittest" "discover" "-s" "tests" "-v"
+2: Working Directory: /mnt/data/FSEProbe_IMPLEMENTATION_KIT_2026-11-02
+2: Test timeout computed to be: 120
+2: test_bad_digest_not_written (test_download_helper.DownloadTests.test_bad_digest_not_written) ... ok
+2: test_directory_rejected (test_download_helper.DownloadTests.test_directory_rejected) ... ok
+2: test_exact_output_filename (test_download_helper.DownloadTests.test_exact_output_filename) ... ok
+2: test_existing_matching_file_no_network (test_download_helper.DownloadTests.test_existing_matching_file_no_network) ... ok
+2: test_explicit_consent_required (test_download_helper.DownloadTests.test_explicit_consent_required) ... ok
+2: test_mismatched_existing_file_preserved (test_download_helper.DownloadTests.test_mismatched_existing_file_preserved) ... ok
+2: test_oversized_response_rejected (test_download_helper.DownloadTests.test_oversized_response_rejected) ... ok
+2: test_app_timeout (test_presentmon_parser.ClassifierTests.test_app_timeout) ... ok
+2: test_automatic_is_not_recorder (test_presentmon_parser.ClassifierTests.test_automatic_is_not_recorder) ... ok
+2: test_bom (test_presentmon_parser.ClassifierTests.test_bom) ... ok
+2: test_boolean_app_exit_rejected (test_presentmon_parser.ClassifierTests.test_boolean_app_exit_rejected) ... ok
+2: test_boolean_observer_exit_rejected (test_presentmon_parser.ClassifierTests.test_boolean_observer_exit_rejected) ... ok
+2: test_boolean_schema_rejected (test_presentmon_parser.ClassifierTests.test_boolean_schema_rejected) ... ok
+2: test_cli_positive (test_presentmon_parser.ClassifierTests.test_cli_positive) ... ok
+2: test_cli_unverified (test_presentmon_parser.ClassifierTests.test_cli_unverified) ... ok
+2: test_composed (test_presentmon_parser.ClassifierTests.test_composed) ... ok
+2: test_control (test_presentmon_parser.ClassifierTests.test_control) ... ok
+2: test_control_legacy (test_presentmon_parser.ClassifierTests.test_control_legacy) ... ok
+2: test_creation_time_mismatch (test_presentmon_parser.ClassifierTests.test_creation_time_mismatch) ... ok
+2: test_duplicate_frame (test_presentmon_parser.ClassifierTests.test_duplicate_frame) ... ok
+2: test_duplicate_header (test_presentmon_parser.ClassifierTests.test_duplicate_header) ... ok
+2: test_duplicate_json (test_presentmon_parser.ClassifierTests.test_duplicate_json) ... ok
+2: test_empty_csv (test_presentmon_parser.ClassifierTests.test_empty_csv) ... ok
+2: test_end_missing (test_presentmon_parser.ClassifierTests.test_end_missing) ... ok
+2: test_extra_column (test_presentmon_parser.ClassifierTests.test_extra_column) ... ok
+2: test_focus_loss (test_presentmon_parser.ClassifierTests.test_focus_loss) ... ok
+2: test_fractional_qpc_refused (test_presentmon_parser.ClassifierTests.test_fractional_qpc_refused) ... ok
+2: test_frame_failed (test_presentmon_parser.ClassifierTests.test_frame_failed) ... ok
+2: test_frame_focus_false (test_presentmon_parser.ClassifierTests.test_frame_focus_false) ... ok
+2: test_frequency_mismatch (test_presentmon_parser.ClassifierTests.test_frequency_mismatch) ... ok
+2: test_guard_catches_transition (test_presentmon_parser.ClassifierTests.test_guard_catches_transition) ... ok
+2: test_hardware_composed (test_presentmon_parser.ClassifierTests.test_hardware_composed) ... ok
+2: test_hash_mismatch (test_presentmon_parser.ClassifierTests.test_hash_mismatch) ... ok
+2: test_hash_pin (test_presentmon_parser.ClassifierTests.test_hash_pin) ... ok
+2: test_identity_mismatch (test_presentmon_parser.ClassifierTests.test_identity_mismatch) ... ok
+2: test_independent (test_presentmon_parser.ClassifierTests.test_independent) ... ok
+2: test_invalid_hash_type_does_not_crash (test_presentmon_parser.ClassifierTests.test_invalid_hash_type_does_not_crash) ... ok
+2: test_ledger_gap (test_presentmon_parser.ClassifierTests.test_ledger_gap) ... ok
+2: test_legacy_copy (test_presentmon_parser.ClassifierTests.test_legacy_copy) ... ok
+2: test_legacy_flip (test_presentmon_parser.ClassifierTests.test_legacy_flip) ... ok
+2: test_long_cpu_frame (test_presentmon_parser.ClassifierTests.test_long_cpu_frame) ... ok
+2: test_marker_kind_mismatch (test_presentmon_parser.ClassifierTests.test_marker_kind_mismatch) ... ok
+2: test_marker_missing (test_presentmon_parser.ClassifierTests.test_marker_missing) ... ok
+2: test_missing_file (test_presentmon_parser.ClassifierTests.test_missing_file) ... ok
+2: test_missing_frame (test_presentmon_parser.ClassifierTests.test_missing_frame) ... ok
+2: test_missing_qpc (test_presentmon_parser.ClassifierTests.test_missing_qpc) ... ok
+2: test_ms_not_ticks (test_presentmon_parser.ClassifierTests.test_ms_not_ticks) ... ok
+2: test_multiple_swapchains (test_presentmon_parser.ClassifierTests.test_multiple_swapchains) ... ok
+2: test_nan (test_presentmon_parser.ClassifierTests.test_nan) ... ok
+2: test_negative_busy (test_presentmon_parser.ClassifierTests.test_negative_busy) ... ok
+2: test_no_capture_frames (test_presentmon_parser.ClassifierTests.test_no_capture_frames) ... ok
+2: test_no_displayed_frames (test_presentmon_parser.ClassifierTests.test_no_displayed_frames) ... ok
+2: test_no_physical_attestation (test_presentmon_parser.ClassifierTests.test_no_physical_attestation) ... ok
+2: test_no_tail (test_presentmon_parser.ClassifierTests.test_no_tail) ... ok
+2: test_null_exit (test_presentmon_parser.ClassifierTests.test_null_exit) ... ok
+2: test_observer_exit (test_presentmon_parser.ClassifierTests.test_observer_exit) ... ok
+2: test_observer_late (test_presentmon_parser.ClassifierTests.test_observer_late) ... ok
+2: test_observer_timeout (test_presentmon_parser.ClassifierTests.test_observer_timeout) ... ok
+2: test_one_bad_frame (test_presentmon_parser.ClassifierTests.test_one_bad_frame) ... ok
+2: test_other_pid_ignored (test_presentmon_parser.ClassifierTests.test_other_pid_ignored) ... ok
+2: test_qpc_overflow (test_presentmon_parser.ClassifierTests.test_qpc_overflow) ... ok
+2: test_remote (test_presentmon_parser.ClassifierTests.test_remote) ... ok
+2: test_reordered_columns (test_presentmon_parser.ClassifierTests.test_reordered_columns) ... ok
+2: test_report_output (test_presentmon_parser.ClassifierTests.test_report_output) ... ok
+2: test_run_id_mismatch (test_presentmon_parser.ClassifierTests.test_run_id_mismatch) ... ok
+2: test_runner_error_rejected (test_presentmon_parser.ClassifierTests.test_runner_error_rejected) ... ok
+2: test_runtime_d3d9 (test_presentmon_parser.ClassifierTests.test_runtime_d3d9) ... ok
+2: test_sac_block (test_presentmon_parser.ClassifierTests.test_sac_block) ... ok
+2: test_short_interval (test_presentmon_parser.ClassifierTests.test_short_interval) ... ok
+2: test_state_false (test_presentmon_parser.ClassifierTests.test_state_false) ... ok
+2: test_stderr (test_presentmon_parser.ClassifierTests.test_stderr) ... ok
+2: test_stdout_event_loss (test_presentmon_parser.ClassifierTests.test_stdout_event_loss) ... ok
+2: test_stdout_warning (test_presentmon_parser.ClassifierTests.test_stdout_warning) ... ok
+2: test_time_reconciliation (test_presentmon_parser.ClassifierTests.test_time_reconciliation) ... ok
+2: test_truncated_csv (test_presentmon_parser.ClassifierTests.test_truncated_csv) ... ok
+2: test_unknown_event (test_presentmon_parser.ClassifierTests.test_unknown_event) ... ok
+2: test_unknown_mode (test_presentmon_parser.ClassifierTests.test_unknown_mode) ... ok
+2: test_version_pin (test_presentmon_parser.ClassifierTests.test_version_pin) ... ok
+2: test_warmup_can_be_different (test_presentmon_parser.ClassifierTests.test_warmup_can_be_different) ... ok
+2: test_warmup_not_capture (test_presentmon_parser.ClassifierTests.test_warmup_not_capture) ... ok
+2: test_wrong_application (test_presentmon_parser.ClassifierTests.test_wrong_application) ... ok
+2: test_wrong_pid (test_presentmon_parser.ClassifierTests.test_wrong_pid) ... ok
+2: test_zero_displayed_duration_does_not_count (test_presentmon_parser.ClassifierTests.test_zero_displayed_duration_does_not_count) ... ok
+2: test_zero_swapchain (test_presentmon_parser.ClassifierTests.test_zero_swapchain) ... ok
+2: test_actual_cpp_event_names_known (test_protocol.ProtocolTests.test_actual_cpp_event_names_known) ... ok
+2: test_fixture_expectations (test_protocol.ProtocolTests.test_fixture_expectations) ... ok
+2: test_no_live_verified_hud (test_protocol.ProtocolTests.test_no_live_verified_hud) ... ok
+2: test_no_shader_runtime_dependency (test_protocol.ProtocolTests.test_no_shader_runtime_dependency) ... ok
+2: test_optional_manifests_not_live_evidence (test_protocol.ProtocolTests.test_optional_manifests_not_live_evidence) ... ok
+2: test_pinned_observer_consistent (test_protocol.ProtocolTests.test_pinned_observer_consistent) ... ok
+2: test_reject_fake_executable (test_protocol.ProtocolTests.test_reject_fake_executable) ... ok
+2: test_shader_work_bounded (test_protocol.ProtocolTests.test_shader_work_bounded) ... ok
+2: test_zip_cannot_package_into_itself (test_protocol.ProtocolTests.test_zip_cannot_package_into_itself) ... ok
+2: test_zip_case_collision_rejected (test_protocol.ProtocolTests.test_zip_case_collision_rejected) ... ok
+2: test_zip_manifest_roundtrip (test_protocol.ProtocolTests.test_zip_manifest_roundtrip) ... ok
+2: test_zip_tamper_detected (test_protocol.ProtocolTests.test_zip_tamper_detected) ... ok
+2: test_zip_traversal_rejected (test_protocol.ProtocolTests.test_zip_traversal_rejected) ... ok
+2: 
+2: ----------------------------------------------------------------------
+2: Ran 97 tests in 2.867s
+2: 
+2: OK
+2/2 Test #2: python ...........................   Passed    3.71 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   3.72 sec
+
+EXIT_CODE=0
+
+$ /mnt/data/fseprobe-core-sanitized
+CORE_PASS 631003 assertions
+
+EXIT_CODE=0
+
+$ /opt/pyvenv/bin/python tools/check_source.py
+{
+  "python_parsed": 10,
+  "json_parsed": 11,
+  "powershell_encoding_checked": 8,
+  "code_files_reviewed": 29
+}
+
+EXIT_CODE=0
+
+ZIP_CRC_PATHS_MEMBERS_SHA256_PASS: 89 files

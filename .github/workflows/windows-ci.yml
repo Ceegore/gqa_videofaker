@@ -1,0 +1,66 @@
+name: Windows build and offline gates - NOT hardware FSE
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: fseprobe-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: windows-2025
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          architecture: x64
+      - name: Record toolchain and structural checks
+        run: |
+          cmake --version
+          python --version
+          python tools/check_source.py
+          if ($LASTEXITCODE -ne 0) { throw 'Structural checks failed.' }
+      - name: Configure discovered MSVC and Windows SDK
+        run: ./tools/configure_windows.ps1
+      - name: Build Release with warnings as errors and offline HLSL compilation
+        run: |
+          cmake --build build --config Release --parallel 2
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC or shader build failed.' }
+      - name: PowerShell syntax and subprocess tests in PowerShell 7
+        run: ./tests/test_runner.ps1
+      - name: PowerShell 5.1 compatibility gate
+        run: |
+          & "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -File ./tests/test_runner.ps1
+          if ($LASTEXITCODE -ne 0) { throw 'PowerShell 5.1 test failed.' }
+      - name: Non-graphics CTest with app-control diagnostics
+        run: ./tools/run_ci_tests.ps1 -AuthorizedCi
+      - name: Package UNSIGNED and NOT FSE HARDWARE TESTED build
+        run: |
+          python tools/package_release.py --exe build/Release/FSEProbe.exe --output dist/FSEProbe-Windows-x64-UNSIGNED.zip --ci-build-pass
+          if ($LASTEXITCODE -ne 0) { throw 'Packaging failed.' }
+      - name: Retain binary package after successful offline gates
+        uses: actions/upload-artifact@v4
+        with:
+          name: FSEProbe-Windows-x64-UNSIGNED-NOT-HARDWARE-TESTED
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 7
+      - name: Retain diagnostics even when a test was blocked
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: FSEProbe-build-diagnostics
+          path: |
+            build/ctest.*
+            build/ci-security.json
+            build/CMakeFiles/CMakeConfigureLog.yaml
+            build/Testing/Temporary/LastTest.log
+          if-no-files-found: warn
+          retention-days: 7

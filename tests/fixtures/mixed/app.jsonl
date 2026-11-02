@@ -1,0 +1,51 @@
+{"schema": 1, "qpc": 9007199354740992, "utc": "2026-11-02T12:00:00.000Z", "event": "START", "run_id": "synthetic-fixture", "pid": 4242, "process_creation_filetime": "134380944000000000", "qpc_frequency": 10000000, "version": "0.1.0-kit", "mode": "legacy-exclusive", "load": "low", "duration": 15, "warmup": 3, "fps_cap": 60, "auto_mark": false, "remote_session": false, "session_id": 1, "seq": 0}
+{"schema": 1, "qpc": 9007199354840992, "utc": "2026-11-02T12:00:00.000Z", "event": "DISPLAY_SELECTED", "gpu": "SYNTHETIC GPU - NOT MEASURED", "output": "SYNTHETIC DISPLAY", "seq": 1}
+{"schema": 1, "qpc": 9007199359740992, "utc": "2026-11-02T12:00:00.000Z", "event": "REQUEST_FULLSCREEN", "seq": 2}
+{"schema": 1, "qpc": 9007199360740992, "utc": "2026-11-02T12:00:00.000Z", "event": "SET_FULLSCREEN_RESULT", "hresult": "0x0", "seq": 3}
+{"schema": 1, "qpc": 9007199364740992, "utc": "2026-11-02T12:00:00.000Z", "event": "MODE_READY", "fullscreen": true, "focus": true, "correct_output": true, "swapchain_pointer_diagnostic": "0x123400", "seq": 4}
+{"schema": 1, "qpc": 9007199367240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 5}
+{"schema": 1, "qpc": 9007199369740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 6}
+{"schema": 1, "qpc": 9007199372240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 7}
+{"schema": 1, "qpc": 9007199374740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 8}
+{"schema": 1, "qpc": 9007199377240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 9}
+{"schema": 1, "qpc": 9007199379740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 10}
+{"schema": 1, "qpc": 9007199382240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 11}
+{"schema": 1, "qpc": 9007199384740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 12}
+{"schema": 1, "qpc": 9007199387240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 13}
+{"schema": 1, "qpc": 9007199389740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 14}
+{"schema": 1, "qpc": 9007199392240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 15}
+{"schema": 1, "qpc": 9007199394740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 16}
+{"schema": 1, "qpc": 9007199394740992, "utc": "2026-11-02T12:00:00.000Z", "event": "CAPTURE_MARK_START", "kind": "OPERATOR_MARKED", "seq": 17}
+{"schema": 1, "qpc": 9007199397240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 18}
+{"schema": 1, "qpc": 9007199399740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 19}
+{"schema": 1, "qpc": 9007199402240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 20}
+{"schema": 1, "qpc": 9007199404740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 21}
+{"schema": 1, "qpc": 9007199407240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 22}
+{"schema": 1, "qpc": 9007199409740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 23}
+{"schema": 1, "qpc": 9007199412240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 24}
+{"schema": 1, "qpc": 9007199414740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 25}
+{"schema": 1, "qpc": 9007199417240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 26}
+{"schema": 1, "qpc": 9007199419740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 27}
+{"schema": 1, "qpc": 9007199422240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 28}
+{"schema": 1, "qpc": 9007199424740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 29}
+{"schema": 1, "qpc": 9007199427240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 30}
+{"schema": 1, "qpc": 9007199429740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 31}
+{"schema": 1, "qpc": 9007199432240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 32}
+{"schema": 1, "qpc": 9007199434740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 33}
+{"schema": 1, "qpc": 9007199437240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 34}
+{"schema": 1, "qpc": 9007199439740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 35}
+{"schema": 1, "qpc": 9007199442240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 36}
+{"schema": 1, "qpc": 9007199444740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 37}
+{"schema": 1, "qpc": 9007199444740992, "utc": "2026-11-02T12:00:00.000Z", "event": "CAPTURE_MARK_END", "kind": "OPERATOR_MARKED", "seq": 38}
+{"schema": 1, "qpc": 9007199447240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 39}
+{"schema": 1, "qpc": 9007199449740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 40}
+{"schema": 1, "qpc": 9007199452240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 41}
+{"schema": 1, "qpc": 9007199454740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 42}
+{"schema": 1, "qpc": 9007199457240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 43}
+{"schema": 1, "qpc": 9007199459740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 44}
+{"schema": 1, "qpc": 9007199462240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 45}
+{"schema": 1, "qpc": 9007199464740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 46}
+{"schema": 1, "qpc": 9007199467240992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 47}
+{"schema": 1, "qpc": 9007199469740992, "utc": "2026-11-02T12:00:00.000Z", "event": "STATE", "fullscreen": true, "focus": true, "correct_output": true, "seq": 48}
+{"schema": 1, "qpc": 9007199474540992, "utc": "2026-11-02T12:00:00.000Z", "event": "LEAVE_FULLSCREEN_RESULT", "hresult": "0x0", "seq": 49}
+{"schema": 1, "qpc": 9007199474740992, "utc": "2026-11-02T12:00:00.000Z", "event": "END", "exit_code": 0, "live_verification": "NOT_LIVE_VERIFIED", "seq": 50}
