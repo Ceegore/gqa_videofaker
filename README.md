@@ -2,7 +2,7 @@
 
 **Stand: 2. November 2026. Sprache: Deutsch. Ziel: Windows 10/11 x64, physischer Monitor, D3D11.**
 
-Dieses Repository enthält die vollständige native Win32/D3D11-Implementierung, Offline-Auswertung, Tests und den manuellen Windows-CI-Job. Der Windows-Build mit MSVC und FXC (`/W4 /WX`) sowie alle Offline-Gates liefen am 2. November 2026 in GitHub Actions erfolgreich (`41470768880`, CLI-Smoke, CTest 3/3, PowerShell 7 und 5.1). Das erzeugte ZIP ist **unsigniert** und bleibt **kein SAC- oder Hardware-FSE-Nachweis**; physisches FSE und Recorder sind `NOT_EXECUTED`/`NOT_EVALUATED`.
+Dieses Repository enthält die vollständige native Win32/D3D11-Implementierung, Offline-Auswertung, Tests und den manuellen Windows-CI-Job. Der Windows-Build mit MSVC und FXC (`/W4 /WX`) sowie alle Offline-Gates liefen am 2. November 2026 in GitHub Actions erfolgreich (`41491801315`, CLI-Smoke, CTest 3/3, PowerShell 7 und 5.1). Das erzeugte ZIP ist **unsigniert** und bleibt **kein SAC- oder Hardware-FSE-Nachweis**; physisches FSE und Recorder sind `NOT_EXECUTED`/`NOT_EVALUATED`.
 
 Der portable C++-Teil und die Python-Tests laufen auch ohne Windows. Maßgeblich für den aktuellen Nachweisstand sind `SHA256SUMS.json` und `evidence/IMPLEMENTATION_2026-11-02.json`.
 

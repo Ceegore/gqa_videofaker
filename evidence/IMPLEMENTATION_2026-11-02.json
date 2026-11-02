@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "recorded_utc": "2026-11-02T15:23:30Z",
+  "recorded_utc": "2026-11-02T17:32:36Z",
   "record_kind": "IMPLEMENTATION_AND_OFFLINE_GATE_EVIDENCE",
   "project_root": "D:\\Projects\\FSEProbe",
   "environment": {
@@ -24,17 +24,17 @@
     "scope": "check_source.py, all 97 Python tests, PowerShell 7 runner gate, PowerShell 5.1 runner gate, and the portable WSL CTest (2/2). No source change between the two rounds."
   },
   "ci_run": {
-    "run_id": 41470768880,
-    "url": "https://github.com/Ceegore/gqa_videofaker/actions/runs/41470768880",
-    "commit": "46a2ca0",
+    "run_id": 41491801315,
+    "url": "https://github.com/Ceegore/gqa_videofaker/actions/runs/41491801315",
+    "commit": "86cdc89",
     "result": "PASS",
-    "duration_seconds": 66,
+    "duration_seconds": 80,
     "gates": "configure; Release MSVC/FXC build with /W4 /WX; CLI smoke (--version, --help, invalid argument exit 2); PowerShell 7; PowerShell 5.1; CTest 3/3 (core, python, app_self_test); unsigned package",
     "artifact": {
       "name": "FSEProbe-Windows-x64-UNSIGNED-NOT-HARDWARE-TESTED",
       "zip_entries_verified": 37,
-      "zip_sha256": "9e81805d000c3b88e5cb02d71d710fd63685b0f1d65c699761353696067c4d5c",
-      "exe_sha256": "81bdcd611e224ba76804aafb9aa24d6b09e97a3f8c94f7734be2f9552d65efe5",
+      "zip_sha256": "9950d69183ba391e9cdc27f308422a077946e397bad5829ad44f92dd3e456aeb",
+      "exe_sha256": "84dac9baf43d31b20c40cf6f08142457672c21f7eaea3d0825314d781d1b3867",
       "pe": "AMD64 PE32+",
       "exe_size_bytes": 366080,
       "embedded_manifest": "PerMonitorV2, asInvoker",
@@ -91,6 +91,7 @@
       "cleanup": "LEAVE_FULLSCREEN_RESULT 0x0"
     },
     "focus_note": "Two initial legacy attempts ended with NO_FOCUS before any mode request; a simulated operator click at the window centre allowed manual-legacy-3 to proceed. This matches the documented one-click startup path and is not counted as a presentation proof.",
+    "sac_observation": "The unsigned CI artifact executed --self-test, --list-monitors and both graphical runs on this host while the SAC registry state was 1. This is one observed execution, not a durable SAC approval; no policy value was changed.",
     "presentmon_attempt": {
       "run_id": "586ce26b1e3d465fb67c98a8020d37be",
       "result": "UNVERIFIED_LAUNCH (classifier exit 11)",
@@ -182,7 +183,7 @@
     "command": "cmd /c \"vcvars64.bat && cl /nologo /std:c++20 /EHsc /W4 /WX /utf-8 /permissive- /I src tests/core_tests.cpp src/scene.cpp\"",
     "exit_code": 2,
     "error": "fatal error C1083: cannot open include file 'crtdbg.h'",
-    "interpretation": "The local host has MSVC but no Universal CRT or Windows SDK, so the application could not be built here. No fallback compiler, toolchain installation, or policy change was attempted. The Windows build was executed in GitHub Actions instead (run 41470768880)."
+    "interpretation": "The local host has MSVC but no Universal CRT or Windows SDK, so the application could not be built here. No fallback compiler, toolchain installation, or policy change was attempted. The Windows build was executed in GitHub Actions instead (run 41491801315)."
   },
   "status": {
     "source_structural_check": "PASS",
@@ -191,9 +192,9 @@
     "powershell_5_1_gate": "PASS",
     "portable_ctest": "PASS_2_OF_2",
     "configure_windows_install_selection_ps51": "PASS_WITH_FAKE_CMAKE",
-    "windows_msvc_build": "PASS_CI_41470768880",
-    "hlsl_fxc": "PASS_CI_41470768880",
-    "windows_ci_run": "PASS_41470768880",
+    "windows_msvc_build": "PASS_CI_41491801315",
+    "hlsl_fxc": "PASS_CI_41491801315",
+    "windows_ci_run": "PASS_41491801315",
     "ctest": "PASS_3_OF_3_CI",
     "artifact_integrity": "PASS_37_ENTRIES",
     "direct_hardware_dxgi_runs": "PASS_BORDERLESS_AND_LEGACY_REQUEST",
