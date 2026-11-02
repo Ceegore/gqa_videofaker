@@ -22,7 +22,7 @@ def make(path: Path, mode='legacy-exclusive', present_mode='Hardware: Legacy Fli
         event.append(dict(schema=1,qpc=BASE+int(seconds*FREQ),utc='2026-11-02T12:00:00.000Z',event=name,**kw))
     desired=mode=='legacy-exclusive'
     add(0,'START',run_id='synthetic-fixture',pid=PID,process_creation_filetime='134380944000000000',qpc_frequency=FREQ,
-        version='0.1.0-kit',mode=mode,load='low',duration=15,warmup=3,fps_cap=60,auto_mark=False,remote_session=False,session_id=1)
+        version='0.1.0',mode=mode,load='low',duration=15,warmup=3,fps_cap=60,auto_mark=False,remote_session=False,session_id=1)
     add(.01,'DISPLAY_SELECTED',gpu='SYNTHETIC GPU - NOT MEASURED',output='SYNTHETIC DISPLAY')
     if desired:
         add(.5,'REQUEST_FULLSCREEN');add(.6,'SET_FULLSCREEN_RESULT',hresult='0x0')

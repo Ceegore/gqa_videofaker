@@ -7,9 +7,9 @@
 | Bereich | Status | Beleg |
 |---|---|---|
 | Quellstruktur, 99 Python-Tests, PS 7/5.1 | PASS | lokale Gates + CI |
-| Windows-MSVC-/FXC-Build (`/W4 /WX`) | PASS | CI-Lauf 41507241314 |
-| CLI-Smoke (`--version`, `--help`, ungültig → 2) | PASS | CI-Lauf 41507241314 |
-| CTest `core`, `python`, `app_self_test` | 3/3 PASS | CI-Lauf 41507241314 |
+| Windows-MSVC-/FXC-Build (`/W4 /WX`) | PASS | CI-Lauf 41509867768 |
+| CLI-Smoke (`--version`, `--help`, ungültig → 2) | PASS | CI-Lauf 41509867768 |
+| CTest `core`, `python`, `app_self_test` | 3/3 PASS | CI-Lauf 41509867768 |
 | Unsigniertes ZIP, Manifest, AMD64-PE32+ | PASS | CI-Artefakt, 38 Einträge |
 | Borderless-Direktlauf, GTX 1080 | PASS (DXGI-Pfad) | `manual/borderless`, Exit 0 |
 | Legacy-Direktlauf, GTX 1080 | PASS (DXGI-Anforderung) | `manual/legacy3`, `SET_FULLSCREEN_RESULT=0x0` |
@@ -25,7 +25,7 @@
 | Ticket | Status | Begründung |
 |---|---|---|
 | 00 Arbeitsstand/Schutzgrenzen | PASS | Kit übernommen, Integrität geprüft, keine Schutzänderung |
-| 01 CI ohne Grafik | PASS | Workflow `workflow_dispatch`, `contents: read`, Lauf 41507241314 |
+| 01 CI ohne Grafik | PASS | Workflow `workflow_dispatch`, `contents: read`, Lauf 41509867768 |
 | 02 Windows-/HLSL-Build | PASS | MSVC 19.51, FXC, vier Shader, `/W4 /WX` |
 | 03 Offline-Gates/Prozesshelfer | PASS | 99 Python-Tests, PS 7/5.1, Runner-Quoting/Timeout |
 | 04 Abnahmefähiges Paket | PASS | 37 ZIP-Einträge, PE32+, Manifest/SHA-256 |
@@ -71,4 +71,4 @@ Der Observer muss dafür in einer separat autorisierten erhöhten PowerShell lau
 - Das unsignierte CI-Artefakt ist keine SAC-Freigabe und keine Hardwarezertifizierung.
 - Ohne Recorder-Medium bleibt `recorder_result=NOT_EVALUATED`.
 
-Aktuelle Details: `evidence/IMPLEMENTATION_2026-11-02.json`, CI-Lauf 41507241314.
+Aktuelle Details: `evidence/IMPLEMENTATION_2026-11-02.json`, CI-Lauf 41509867768.

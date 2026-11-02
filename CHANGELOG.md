@@ -10,7 +10,7 @@ Erste veröffentlichte FSEProbe-Diagnoseversion.
 - App-Present-Ledger, QPC-/Fokus-/Output-Diagnose und automatische Markierungen.
 - PresentMon-2.6.0-Auswertung mit fail-closed Klassifikation, Guard-Bändern und Ledger-Abgleich.
 - Offline-Tests, PowerShell-Runner, Windows-CI und unsigniertes Runtime-Paket.
-- Windows-CI-Lauf 41507241314: MSVC/FXC-Build, CLI-Smoke, PS 7/5.1, CTest 3/3.
+- Windows-CI-Lauf 41509867768: MSVC/FXC-Build, CLI-Smoke, PS 7/5.1, CTest 3/3.
 - Reale ETW-Läufe: Borderless-Kontrolle PASS (`CONTROL_VERIFIED_NOT_FSE`); Legacy FAIL (`FAIL_NOT_CLASSIC_EXCLUSIVE`, beobachtet `Hardware: Independent Flip`).
 
 ### Behobene Fehler

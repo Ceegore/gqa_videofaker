@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "recorded_utc": "2026-11-02T19:13:39Z",
+  "recorded_utc": "2026-11-02T19:28:56Z",
   "record_kind": "IMPLEMENTATION_AND_OFFLINE_GATE_EVIDENCE",
   "project_root": "D:\\Projects\\FSEProbe",
   "environment": {
@@ -24,17 +24,17 @@
     "scope": "check_source.py, all 97 Python tests, PowerShell 7 runner gate, PowerShell 5.1 runner gate, and the portable WSL CTest (2/2). No source change between the two rounds."
   },
   "ci_run": {
-    "run_id": 41507241314,
-    "url": "https://github.com/Ceegore/gqa_videofaker/actions/runs/41507241314",
-    "commit": "ddd4699",
+    "run_id": 41509867768,
+    "url": "https://github.com/Ceegore/gqa_videofaker/actions/runs/41509867768",
+    "commit": "692acca",
     "result": "PASS",
-    "duration_seconds": 211,
+    "duration_seconds": 83,
     "gates": "configure; Release MSVC/FXC build with /W4 /WX; CLI smoke (--version, --help, invalid argument exit 2); PowerShell 7; PowerShell 5.1; CTest 3/3 (core, python, app_self_test); unsigned package",
     "artifact": {
       "name": "FSEProbe-Windows-x64-UNSIGNED-NOT-HARDWARE-TESTED",
       "zip_entries_verified": 38,
-      "zip_sha256": "7c83cede1a1a78023df7b6410dea301096dc065da9c60dd67459daff1a3a8d1c",
-      "exe_sha256": "f130c8e7b631dbc7274fbc7aea75736041815e86aca8b721b69fafc5935bc3f0",
+      "zip_sha256": "2327d2e3b6a20a4233e58b3058b71c9822ffb398165d9d5a06d37185c24379a2",
+      "exe_sha256": "e86519e364f13e1caa15439de23285d96c77b245e238c1e11f2a586bae6d9494",
       "pe": "AMD64 PE32+",
       "exe_size_bytes": 366080,
       "embedded_manifest": "PerMonitorV2, asInvoker",
@@ -48,6 +48,14 @@
         "recorder_result": "NOT_EVALUATED"
       }
     }
+  },
+  "github_release": {
+    "tag": "v0.1.0",
+    "url": "https://github.com/Ceegore/gqa_videofaker/releases/tag/v0.1.0",
+    "target_commit": "692acca478cc9c48ff8de55be3449a7db0f083fa",
+    "assets": ["FSEProbe-Windows-x64-UNSIGNED.zip", "FSEProbe-Windows-x64-UNSIGNED.zip.sha256"],
+    "zip_sha256": "2327d2e3b6a20a4233e58b3058b71c9822ffb398165d9d5a06d37185c24379a2",
+    "exe_sha256": "e86519e364f13e1caa15439de23285d96c77b245e238c1e11f2a586bae6d9494"
   },
   "hardware_runs": {
     "host": {
@@ -231,7 +239,7 @@
     "command": "cmd /c \"vcvars64.bat && cl /nologo /std:c++20 /EHsc /W4 /WX /utf-8 /permissive- /I src tests/core_tests.cpp src/scene.cpp\"",
     "exit_code": 2,
     "error": "fatal error C1083: cannot open include file 'crtdbg.h'",
-    "interpretation": "The local host has MSVC but no Universal CRT or Windows SDK, so the application could not be built here. No fallback compiler, toolchain installation, or policy change was attempted. The Windows build was executed in GitHub Actions instead (run 41507241314)."
+    "interpretation": "The local host has MSVC but no Universal CRT or Windows SDK, so the application could not be built here. No fallback compiler, toolchain installation, or policy change was attempted. The Windows build was executed in GitHub Actions instead (run 41509867768)."
   },
   "status": {
     "source_structural_check": "PASS",
@@ -240,9 +248,9 @@
     "powershell_5_1_gate": "PASS",
     "portable_ctest": "PASS_2_OF_2",
     "configure_windows_install_selection_ps51": "PASS_WITH_FAKE_CMAKE",
-    "windows_msvc_build": "PASS_CI_41507241314",
-    "hlsl_fxc": "PASS_CI_41507241314",
-    "windows_ci_run": "PASS_41507241314",
+    "windows_msvc_build": "PASS_CI_41509867768",
+    "hlsl_fxc": "PASS_CI_41509867768",
+    "windows_ci_run": "PASS_41509867768",
     "ctest": "PASS_3_OF_3_CI",
     "artifact_integrity": "PASS_38_ENTRIES",
     "direct_hardware_dxgi_runs": "PASS_BORDERLESS_AND_LEGACY_REQUEST",

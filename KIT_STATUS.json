@@ -5,14 +5,14 @@
   "artifact_kind": "SOURCE_IMPLEMENTATION",
   "portable_cpp_build": "EXECUTED",
   "python_tests": "EXECUTED",
-  "windows_msvc_build": "EXECUTED_PASS_CI_41507241314",
-  "hlsl_fxc_compilation": "EXECUTED_PASS_CI_41507241314",
+  "windows_msvc_build": "EXECUTED_PASS_CI_41509867768",
+  "hlsl_fxc_compilation": "EXECUTED_PASS_CI_41509867768",
   "powershell_execution": "EXECUTED_PASS_PS7_PS51_CI",
   "sac_runtime_acceptance": "SINGLE_HOST_RUN_OBSERVED_NOT_APPROVAL",
   "hardware_fse_validation": "NOT_VERIFIED",
   "recorder_result": "NOT_EVALUATED",
   "live_fse_verification": "NOT_IMPLEMENTED_BY_DESIGN",
   "python_test_count": 99,
-  "current_ci_run": 41507241314,
+  "current_ci_run": 41509867768,
   "evidence": "evidence/IMPLEMENTATION_2026-11-02.json"
 }
