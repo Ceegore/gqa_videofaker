@@ -14,6 +14,7 @@ Ein direkter DXGI-Test auf der physischen GTX 1080 war erfolgreich: `borderless-
 2. `AGENTS.md` und `docs/05_WEAK_AGENT_EXECUTION_RUNBOOK.md`: Arbeitsauftrag für den Coding-Agenten.
 3. `docs/01_FULL_IMPLEMENTATION_PLAN.md`: Architektur und verbindliche Entscheidungen.
 4. `docs/10_SAC_FIRST_DEV_AND_TEST.md`: Sicherheitsgrenzen, bevor etwas auf dem Dev-PC gestartet wird.
+5. `docs/12_FINAL_STATUS.md`: finaler Ticketabschluss, Hardware-Evidenz und die offene ETW-Grenze.
 
 **Grundsatz:** SAC auf dem Entwicklungs-PC bleibt unverändert. Windows-CI baut und prüft; die echte Grafikabnahme erfolgt separat auf zulässiger physischer Windows-Hardware. Ein gebautes ZIP ist weder SAC-Freigabe noch FSE-Nachweis.
 
